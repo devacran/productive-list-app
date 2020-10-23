@@ -1,5 +1,18 @@
 $primary-color: #05a1ab;
-
+$white-color: white;
+$transparent-color: rgba(255, 255, 255, 0.37);
+$box-radius: 16px;
+$box-radius-sm: 10px;
+$box-padding: 16px;
 * {
   box-sizing: border-box;
+}
+body {
+  box-sizing: border-box;
+  background-color: $primary-color;
+}
+.app-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 3vw;
 }

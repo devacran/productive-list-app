@@ -1,9 +1,11 @@
 import React from "react";
 import Home from "./containers/Home";
+import Header from "./containers/Header";
 const App = () => {
   return (
-    <div>
-      Hola Migue<Home></Home>
+    <div className="app-container">
+      <Header></Header>
+      <Home></Home>
     </div>
   );
 };

@@ -1,0 +1,17 @@
+.header {
+  height: 60px;
+  background-color: blue;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  &__item-1,
+  &__item-2 {
+    display: flex;
+    align-items: center;
+  }
+  &__item-1 {
+    justify-content: flex-start;
+  }
+  &__item-2 {
+    justify-content: flex-end;
+  }
+}
