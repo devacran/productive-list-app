@@ -17,7 +17,6 @@ const Timer = props => {
   } = props;
   const { timerStatus } = timer;
   const remaindTime = parseTimer(timer.remaindTime);
-
   useEffect(() => {
     countDown.config({
       seconds: timer.remaindTime,

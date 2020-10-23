@@ -20,11 +20,11 @@ const Home = props => {
       remaindTime: currentTask.duration,
       timerStatus: "idle"
     });
-  }, [sortListByStartDate, setCurrentTask]);
+  }, [setCurrentTask]);
   return (
     <div className="home">
       <Timer></Timer>
-      <List data={taskList}></List>
+      <List data={list}></List>
     </div>
   );
 };
@@ -33,6 +33,6 @@ const mapDispatchToProps = {
   setCurrentTask: _setCurrentTask
 };
 const mapStateToProps = state => ({
-  list: state.list.data || []
+  list: state.list.data.tasks || []
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
