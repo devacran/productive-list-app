@@ -18,7 +18,7 @@ const TimerButton = ({ timerStatus, setTimerStatus }) => {
     }
   };
 
-  const stop = (
+  const initial = (
     <div className="timer-button">
       <button onClick={handleTimerButton} value="start">
         START
@@ -45,7 +45,8 @@ const TimerButton = ({ timerStatus, setTimerStatus }) => {
   //returns the button depending the timer state value
   return (
     <>
-      {timerStatus === "stop" && stop}
+      {timerStatus === "idle" && initial}
+      {timerStatus === "stop" && initial}
       {timerStatus === "pause" && pause}
       {timerStatus === "inProgress" && inProgress}
     </>

@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { setCurrentTask as _setCurrentTask } from "../actions";
+import { setTaskTimer as _setTaskTimerData } from "../actions";
 import { sortListByStartDate } from "../utils/sortList";
 import Timer from "./Timer";
 import List from "./List";
 const Home = props => {
-  const { list, setCurrentTask } = props;
+  const { list, setCurrentTask, setTaskTimerData } = props;
   let taskList = [];
   let taskTimer = {};
   useEffect(() => {
@@ -14,6 +15,11 @@ const Home = props => {
     taskList = sortListByStartDate(list);
     const currentTask = taskList.shift();
     setCurrentTask(currentTask);
+    setTaskTimerData({
+      duration: currentTask.duration,
+      remaindTime: currentTask.duration,
+      timerStatus: "idle"
+    });
   }, [sortListByStartDate, setCurrentTask]);
   return (
     <div className="home">
@@ -23,6 +29,7 @@ const Home = props => {
   );
 };
 const mapDispatchToProps = {
+  setTaskTimerData: _setTaskTimerData,
   setCurrentTask: _setCurrentTask
 };
 const mapStateToProps = state => ({

@@ -3,7 +3,7 @@ const list = {
     {
       id: "124",
       name: "Tarea 2",
-      duration: 37,
+      duration: 95000,
       description: "",
       completed: false,
       completitionTime: 17,
@@ -14,7 +14,7 @@ const list = {
     {
       id: "123",
       name: "Tarea 1",
-      duration: 34,
+      duration: 6400,
       description: "",
       completed: false,
       completitionTime: 23,
@@ -30,7 +30,7 @@ const list = {
 const timer = {
   duration: 34, //this value is setted from the currentTask duration
   remaindTime: 11,
-  timerStatus: "stop"
+  timerStatus: "idle"
 };
 
 //This is setted by default with the most recent item from List considering the date.

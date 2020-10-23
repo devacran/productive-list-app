@@ -1,7 +1,20 @@
 const currentTaskReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_CURRENT_TASK":
-      return action.payload;
+      return {
+        ...state,
+        data: action.payload
+      };
+    case "SET_CURRENT_TASK_COMPLETED":
+      const completitionTime = action.payload;
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          completed: completitionTime ? true : false,
+          completitionTime
+        }
+      };
     default:
       return state;
   }
