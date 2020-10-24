@@ -1,7 +1,6 @@
 const timeReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_TASK_TIMER":
-      console.log("hola");
       return action.payload;
     case "SET_TIMER_STATUS":
       return {

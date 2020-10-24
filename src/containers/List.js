@@ -33,8 +33,8 @@ const List = props => {
   const handleCancelNewTask = () => {
     setNewTask(false);
   };
-  const handleEditTask = () => {
-    editTask ? setEditTask(false) : setEditTask(true);
+  const handleEditTask = id => {
+    editTask ? setEditTask(null) : setEditTask(id);
   };
   const handleSaveNewTask = taskData => {
     //try catch to PUT in API, then it must return res
@@ -58,7 +58,7 @@ const List = props => {
       <ListItemHeader></ListItemHeader>
       {sortedList.map(data => (
         <Item
-          expand={editTask}
+          expand={editTask === data.id}
           handleEditTask={handleEditTask}
           key={data.id}
           handleDeleteTask={handleDeleteTask}

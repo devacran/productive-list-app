@@ -5,7 +5,6 @@ const listReducer = (state = [], action) => {
         ...state,
         data: { ...state.data, tasks: [...state.data.tasks, action.payload] }
       };
-      break;
     case "REMOVE_TASK_FROM_LIST":
       return {
         ...state,
@@ -14,7 +13,19 @@ const listReducer = (state = [], action) => {
           tasks: state.data.tasks.filter(({ id }) => id !== action.payload)
         }
       };
-      break;
+    case "UPDATE_TASK_DATA_FROM_LIST":
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          tasks: state.data.tasks.map(task => {
+            if (task.id === action.payload.id) {
+              return Object.assign({}, task, action.payload);
+            }
+            return task;
+          })
+        }
+      };
     default:
       return state;
   }

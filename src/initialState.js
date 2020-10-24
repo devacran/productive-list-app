@@ -6,7 +6,7 @@ const list = {
       {
         id: "123",
         name: "Tarea Vieja",
-        duration: 6400,
+        duration: 1500000,
         description: "",
         completed: false,
         completitionTime: 23,
