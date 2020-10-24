@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setTaskTimer as _setTaskTimerData } from "../actions";
 
-import { sortListByStartDate } from "../utils/sortList";
 import Timer from "./Timer";
 import List from "./List";
+
+import { sortListByStartDate } from "../utils/sortList";
+
 const Home = props => {
   const { list, setCurrentTask, setTaskTimerData } = props;
   let taskTimer = {};
+
   useEffect(() => {
     //The first step to do is load the list info
     //Then set the current task in the state (the lastest by default)
@@ -22,6 +25,7 @@ const Home = props => {
       timerStatus: "idle"
     });
   }, [setCurrentTask]);
+
   return (
     <div className="home">
       <Timer></Timer>
