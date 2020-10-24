@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { setCurrentTask as _setCurrentTask } from "../actions";
+import { setListSortType as _setListSortType } from "../actions";
 import { removeTaskFromList as _removeTaskFromList } from "../actions";
-import { sortListByStartDate } from "../utils/sortList";
+import { sortListByStartDate, sortListByName } from "../utils/sortList";
 import ListItemHeader from "../components/ListItemHeader";
 import Item from "./Item";
 import NewItem from "../components/NewItem";
@@ -11,14 +12,27 @@ import NewItem from "../components/NewItem";
 const List = props => {
   const [newTask, setNewTask] = useState(false); //To expand o close the newTask form
   const [editTask, setEditTask] = useState(false); //To expand o close the newTask form
+  const [sortedList, setSortedList] = useState([]); //To expand o close the newTask form
   const {
     setNewTaskToList,
     setCurrentTask,
     removeTaskFromList,
-    currentTask
+    currentTask,
+    list,
+    listSortType,
+    setListSortType
   } = props;
-  const list = props.data || [];
-  const sortedList = sortListByStartDate(list);
+
+  useEffect(() => {
+    switch (listSortType) {
+      case "date":
+        setSortedList(sortListByStartDate(list));
+        break;
+      case "name":
+        setSortedList(sortListByName(list));
+        break;
+    }
+  }, [listSortType]);
   const handleCreateNewTask = () => {
     setNewTask(true);
   };
@@ -53,9 +67,13 @@ const List = props => {
     setNewTaskToList(res);
     setCurrentTask(res);
   };
+
+  const handleListSortType = type => {
+    setListSortType(type);
+  };
   return (
     <div className="list">
-      <ListItemHeader></ListItemHeader>
+      <ListItemHeader handleListSortType={handleListSortType}></ListItemHeader>
       {sortedList.map(data => (
         <Item
           expand={editTask === data.id}
@@ -75,11 +93,14 @@ const List = props => {
   );
 };
 const mapStateToProps = state => ({
-  currentTask: state.currentTask.data
+  currentTask: state.currentTask.data,
+  list: state.list.data.tasks || [],
+  listSortType: state.list.sort
 });
 const mapDispatchToProps = {
   setNewTaskToList: _setNewTaskToList,
   setCurrentTask: _setCurrentTask,
-  removeTaskFromList: _removeTaskFromList
+  removeTaskFromList: _removeTaskFromList,
+  setListSortType: _setListSortType
 };
 export default connect(mapStateToProps, mapDispatchToProps)(List);

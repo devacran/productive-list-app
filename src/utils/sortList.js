@@ -7,3 +7,12 @@ export const sortListByStartDate = list => {
   });
   return _list;
 };
+export const sortListByName = list => {
+  const _list = [...list];
+  _list.sort((a, b) => {
+    const na = a.name;
+    const nb = b.name;
+    return nb - na;
+  });
+  return _list;
+};

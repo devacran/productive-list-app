@@ -2,12 +2,17 @@ export const setCurrentTask = payload => ({
   type: "SET_CURRENT_TASK",
   payload
 });
-export const updateTaskDataFromList = payload => ({
-  type: "UPDATE_TASK_DATA_FROM_LIST",
+export const setCurrentTaskCompleted = payload => ({
+  type: "SET_CURRENT_TASK_COMPLETED",
   payload
 });
 export const updateCurrentTaskData = payload => ({
   type: "UPDATE_CURRENT_TASK_DATA",
+  payload
+});
+
+export const updateTaskDataFromList = payload => ({
+  type: "UPDATE_TASK_DATA_FROM_LIST",
   payload
 });
 
@@ -19,8 +24,8 @@ export const removeTaskFromList = payload => ({
   type: "REMOVE_TASK_FROM_LIST",
   payload
 });
-export const setCurrentTaskCompleted = payload => ({
-  type: "SET_CURRENT_TASK_COMPLETED",
+export const setListSortType = payload => ({
+  type: "SET_LIST_SORT_TYPE",
   payload
 });
 export const setTaskTimer = payload => ({
