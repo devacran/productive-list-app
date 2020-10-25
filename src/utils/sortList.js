@@ -10,8 +10,8 @@ export const sortListByStartDate = list => {
 export const sortListByName = list => {
   const _list = [...list];
   _list.sort((a, b) => {
-    const na = a.name;
-    const nb = b.name;
+    const na = a.name.toUpperCase();
+    const nb = b.name.toUpperCase();
     return nb - na;
   });
   return _list;

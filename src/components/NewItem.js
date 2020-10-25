@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Button } from "@material-ui/core";
 const NewItem = props => {
   const [inputValues, setInputValues] = useState({
     name: "Mi Lista ",
@@ -32,11 +32,16 @@ const NewItem = props => {
         break;
     }
   };
+  const handleCancel = () => {
+    handleCancelNewTask();
+  };
   return (
     <div className="new-item">
-      <button onClick={handleClick} value="new">
-        New Item Works
-      </button>
+      <div className="new-item__main">
+        <button onClick={handleClick} value="new">
+          New Item Works
+        </button>
+      </div>
 
       {expand && (
         <form>
@@ -56,12 +61,12 @@ const NewItem = props => {
             value={inputValues.description}
           ></input>
 
-          <button onClick={handleClick} value="cancel">
-            CANCEL
-          </button>
-          <button onClick={handleSubmit} type="submit">
-            SAVE
-          </button>
+          <Button onClick={handleCancel} value="cancel">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} color="primary" type="submit">
+            Save
+          </Button>
         </form>
       )}
     </div>

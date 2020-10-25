@@ -1,0 +1,8 @@
+.list {
+  &__items {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1em 0;
+    margin: 1em 0;
+  }
+}

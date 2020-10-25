@@ -5,6 +5,7 @@ import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setListSortType as _setListSortType } from "../actions";
 import { removeTaskFromList as _removeTaskFromList } from "../actions";
 import { sortListByStartDate, sortListByName } from "../utils/sortList";
+import { filterList } from "../utils/filterList";
 import ListItemHeader from "../components/ListItemHeader";
 import Item from "./Item";
 import NewItem from "../components/NewItem";
@@ -20,7 +21,8 @@ const List = props => {
     currentTask,
     list,
     listSortType,
-    setListSortType
+    setListSortType,
+    listFilterType
   } = props;
 
   useEffect(() => {
@@ -32,13 +34,12 @@ const List = props => {
         setSortedList(sortListByName(list));
         break;
     }
-  }, [listSortType]);
+  }, [listSortType, list]);
   const handleCreateNewTask = () => {
     setNewTask(true);
   };
   const handleDeleteTask = id => {
     //try catch to PUT in API, then it must return success or error
-    console.log("deleteTask", id);
     removeTaskFromList(id);
     if (currentTask.id === id) {
       setCurrentTask(list.shift());
@@ -71,18 +72,24 @@ const List = props => {
   const handleListSortType = type => {
     setListSortType(type);
   };
+
   return (
-    <div className="list">
-      <ListItemHeader handleListSortType={handleListSortType}></ListItemHeader>
-      {sortedList.map(data => (
-        <Item
-          expand={editTask === data.id}
-          handleEditTask={handleEditTask}
-          key={data.id}
-          handleDeleteTask={handleDeleteTask}
-          data={data}
-        />
-      ))}
+    <div>
+      <ListItemHeader
+        handleListSortType={handleListSortType}
+        data={currentTask}
+      ></ListItemHeader>
+      <div className="list__items">
+        {sortedList.map(data => (
+          <Item
+            expand={editTask === data.id}
+            handleEditTask={handleEditTask}
+            key={data.id}
+            handleDeleteTask={handleDeleteTask}
+            data={data}
+          />
+        ))}
+      </div>
       <NewItem
         expand={newTask}
         handleCreateNewTask={handleCreateNewTask}
@@ -95,7 +102,8 @@ const List = props => {
 const mapStateToProps = state => ({
   currentTask: state.currentTask.data,
   list: state.list.data.tasks || [],
-  listSortType: state.list.sort
+  listSortType: state.list.sort,
+  listFilterType: state.list.filter
 });
 const mapDispatchToProps = {
   setNewTaskToList: _setNewTaskToList,
@@ -104,3 +112,20 @@ const mapDispatchToProps = {
   setListSortType: _setListSortType
 };
 export default connect(mapStateToProps, mapDispatchToProps)(List);
+
+// //To generate the list depending the app state (list and sort)
+// function generateCurrentList(list, sortType, filters) {
+//   let _list = [...list];
+//   _list = filterList.byOptions(list, filters);
+//   if (sortType === "date") {
+//     _list = sortListByStartDate(list);
+//   }
+//   if (sortType === "name") {
+//     _list = sortListByName(list);
+//   }
+//   return _list;
+// }
+// console.log(
+//   "PRUEBA con name y short",
+//   generateCurrentList(list, "name", { duration: "short" })
+// );

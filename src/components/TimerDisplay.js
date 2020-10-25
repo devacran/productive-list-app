@@ -6,10 +6,18 @@ const TimerDisplay = props => {
 
   return (
     <div className="timer-display">
-      <div>REMAIND TIME </div>
-      <div>hours: {hours} </div>
-      <div>minutes: {minutes} </div>
-      <div>seconds: {seconds} </div>
+      <span>
+        {hours < 10 ? "0" : ""}
+        {hours}
+      </span>
+      <span>
+        :{minutes < 10 ? "0" : ""}
+        {minutes}
+      </span>
+      <span>
+        :{seconds < 10 ? "0" : ""}
+        {seconds}
+      </span>
     </div>
   );
 };

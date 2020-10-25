@@ -1,8 +1,11 @@
 .header {
   height: 60px;
-  background-color: blue;
+  background-color: $primary-color;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  .MuiButton-root {
+    background-color: $transparent-color;
+  }
   &__item-1,
   &__item-2 {
     display: flex;

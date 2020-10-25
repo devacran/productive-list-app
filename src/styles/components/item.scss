@@ -1,6 +1,48 @@
 .item {
-  height: 75px;
+  min-height: 75px;
   width: 100%;
   background-color: $white-color;
   border-radius: $box-radius-sm;
+  padding: $box-padding-sm;
+  border: 3px solid transparent;
+  &--active {
+    border: 3px solid $active-color;
+  }
+  &__main {
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    height: calc(75px - #{2 * $box-padding-sm});
+  }
+  &__main > div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+  &__options {
+  }
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 1em;
+    input {
+      outline: none;
+      padding: 0;
+      border: none;
+      font-size: 1.5em;
+    }
+  }
+  &__name {
+    cursor: pointer;
+  }
+  &__duration {
+    text-align: right;
+  }
+  &__description {
+    button {
+      font-weight: bolder;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
 }

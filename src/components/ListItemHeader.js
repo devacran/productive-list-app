@@ -1,14 +1,16 @@
 import React from "react";
-
+import ListFilterMenu from "./ListFilterMenu";
 const ListItemHeader = props => {
-  const { handleListSortType } = props;
+  const { handleListSortType, data } = props;
   const handleClick = evn => {
     const type = evn.target.value;
     handleListSortType(type);
   };
   return (
     <div className="list-item-header">
-      <div>ListItemHeader WORKS</div>
+      <div>Trabajando en : {data.name}</div>
+      <ListFilterMenu />
+      <button>Prueba</button>
       <button onClick={handleClick} value="date">
         date
       </button>

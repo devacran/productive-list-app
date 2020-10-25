@@ -30,8 +30,8 @@ class Timer {
 }
 export const timer = new Timer();
 
-export function parseTimer(endtime) {
-  const total = endtime;
+export function parseTimer(time) {
+  const total = time;
   const seconds = Math.floor((total / 1000) % 60);
   const minutes = Math.floor((total / 1000 / 60) % 60);
   const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
