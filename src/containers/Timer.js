@@ -19,6 +19,14 @@ const Timer = props => {
   } = props;
   const { timerStatus } = timer;
   const remaindTime = parseTimer(timer.remaindTime);
+
+  const calcCompletitionTime = (startDate, endDate) => {
+    const sd = Date.parse(startDate);
+    const ed = Date.parse(endDate);
+    const t = ed - sd;
+    return new Date(t).getSeconds();
+  };
+
   useEffect(() => {
     countDown.config(
       {
@@ -42,16 +50,23 @@ const Timer = props => {
         });
         break;
       case "stop":
+        const endDate = new Date().toString();
+        const completitionTime = calcCompletitionTime(
+          currentTask.startDate,
+          endDate
+        );
         countDown.stop();
         setTimerRemind(0);
         updateTaskDataFromList({
           id: currentTask.id,
           completed: true,
-          completitionTime: 500
+          endDate,
+          completitionTime
         }); //Updates the task from list
         updateCurrentTaskData({
           completed: true,
-          completitionTime: 500
+          endDate,
+          completitionTime
         }); //Updates the task from currentTask
         break;
       case "pause":

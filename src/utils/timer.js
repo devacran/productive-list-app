@@ -15,7 +15,7 @@ class Timer {
   start() {
     const t = setInterval(() => {
       //each interval rest 1000ms
-      this.remaindTime -= 1000;
+      this.remaindTime -= 1;
       //sets the remaind time to global app state
       this.setRemindTimeState(this.remaindTime);
       if (this.remaindTime < 1) this.stop();
@@ -24,26 +24,27 @@ class Timer {
   }
 
   stop() {
+    console.log("hola");
     clearInterval(this.currentTimer);
-    this.timerState === "stop" && this.setTimerState("stop");
+    this.timerState !== "pause" && this.setTimerState("stop");
   }
 }
 export const timer = new Timer();
 
-export function parseTimer(time) {
-  const total = time;
-  const seconds = Math.floor((total / 1000) % 60);
-  const minutes = Math.floor((total / 1000 / 60) % 60);
-  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-
-  return {
-    total,
-    hours,
-    minutes,
-    seconds
-  };
-}
-export function parseTime(sec) {
+// export function parseTimer(time) {
+//   const total = time;
+//   const seconds = Math.floor((total / 1000) % 60);
+//   const minutes = Math.floor((total / 1000 / 60) % 60);
+//   const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+//
+//   return {
+//     total,
+//     hours,
+//     minutes,
+//     seconds
+//   };
+// }
+export function parseTimer(sec) {
   const total = sec;
   const seconds = Math.floor(sec % 60);
   const minutes = Math.floor((total / 60) % 60);

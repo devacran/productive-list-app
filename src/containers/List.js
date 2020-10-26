@@ -63,7 +63,7 @@ const List = props => {
   const handleSaveNewTask = taskData => {
     //try catch to PUT in API, then it must return res
     const res = {
-      id: "1239",
+      id: Math.random(),
       name: taskData.name,
       duration: taskData.duration,
       description: taskData.description,

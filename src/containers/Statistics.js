@@ -9,7 +9,13 @@ const Statistics = props => {
     const generateWeek = () => {
       let labels = [];
       for (let i = 0; i < 7; i++) {
-        const d = todayDate.setDate(todayDate.getDate() - 1);
+        // const d = todayDate.setDate(todayDate.getDate() - 1);
+        let d;
+        if (i === 0) {
+          d = todayDate.setDate(todayDate.getDate());
+        } else {
+          d = todayDate.setDate(todayDate.getDate() - 1);
+        }
         const label = new Date(d).toLocaleDateString("es-MX", {
           day: "numeric",
           month: "short"
