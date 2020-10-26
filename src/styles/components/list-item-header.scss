@@ -1,0 +1,17 @@
+.list-item-header {
+  text-align: center;
+  color: white;
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 2px solid;
+    margin-bottom: 1em;
+  }
+  &__options {
+    background-color: $transparent-color;
+    border-radius: $box-radius-sm;
+    width: 100%;
+  }
+}

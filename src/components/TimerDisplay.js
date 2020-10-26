@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { parseTimer } from "../utils/timer";
 const TimerDisplay = props => {
   const { total, hours, minutes, seconds } = props;
 

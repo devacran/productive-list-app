@@ -20,12 +20,12 @@ const Item = props => {
     handleEditTask,
     updateCurrentTaskData,
     updateTaskDataFromList,
+    handleCancel,
     expand,
     data
   } = props;
 
   const [inputValues, setInputValues] = useState({});
-  const [customDuration, setCustomDuration] = useState();
 
   const handleSelectItem = () => {
     const { timerStatus } = timer;
@@ -55,6 +55,9 @@ const Item = props => {
         break;
       case "delete":
         handleDeleteTask(data.id);
+        break;
+      case "cancel":
+        handleCancel();
         break;
     }
   };
@@ -138,7 +141,10 @@ const Item = props => {
       </div>
       {expand && (
         <div className="item__options">
-          <ItemTimeSelector handleClick={handleTaskDuration} />
+          <ItemTimeSelector
+            handleClick={handleTaskDuration}
+            duration={inputValues.duration}
+          />
           <ItemDescription
             description={inputValues.description}
             setDescription={handleDescription}
@@ -147,7 +153,9 @@ const Item = props => {
             <Button onClick={handleClick} color="secondary" name="delete">
               Borrar
             </Button>
-            <Button>Cancel</Button>
+            <Button onClick={handleClick} name="cancel">
+              Cancel
+            </Button>
             <Button color="primary" type="submit">
               Save
             </Button>
@@ -167,5 +175,3 @@ const mapStateToProps = state => ({
   timer: state.timer
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Item);
-
-// <ItemOptions handleSubmit={handleSubmit} handleDelete={delete} handleCancel={cancel} description={inputValues.description} handleDescription={handleDescription}/>

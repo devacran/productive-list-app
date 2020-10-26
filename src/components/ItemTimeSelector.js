@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Button,
@@ -7,23 +7,35 @@ import {
   Select,
   MenuItem
 } from "@material-ui/core";
-
-const ItemTimeSelector = ({ handleClick }) => {
+import { parseTimer } from "../utils/timer";
+const ItemTimeSelector = props => {
+  const { handleClick, duration } = props;
   const [custom, setCustom] = useState(false);
+  useEffect(() => {
+    if (custom) {
+      const min = custom.min * 60;
+      const sec = custom.sec;
+      const total = min + sec;
+      handleClick({ duration: total });
+    }
+  }, [custom]);
   return (
     <>
       <div>
-        <div>Duracion</div>
-        <Button onClick={() => handleClick({ duration: 9000 })} size="small">
+        <div>
+          Duracion: {parseTimer(duration).hours} hrs
+          {parseTimer(duration).minutes} mins
+        </div>
+        <Button onClick={() => handleClick({ duration: 125000 })} size="small">
           Corta
         </Button>
-        <Button onClick={() => handleClick({ duration: 25000 })} size="small">
+        <Button onClick={() => handleClick({ duration: 1250000 })} size="small">
           Mediana
         </Button>
-        <Button onClick={() => handleClick({ duration: 34000 })} size="small">
+        <Button onClick={() => handleClick({ duration: 1250000 })} size="small">
           Larga
         </Button>
-        <Button onClick={() => setCustom(true)} size="small">
+        <Button onClick={() => setCustom({ min: 0, sec: 0 })} size="small">
           Personalizado
         </Button>
       </div>
@@ -36,10 +48,10 @@ const ItemTimeSelector = ({ handleClick }) => {
             <Select
               labelId="custom-task-duration-mins"
               id="custom-task-duration-mins"
-              value={"1"}
-              onChange={evn => console.log(evn.currentTarget.value)}
+              value={custom.min}
+              onChange={evn => setCustom({ ...custom, min: evn.target.value })}
             >
-              {[1, 2, 3, 4, 5].map((min, k) => (
+              {[0, 1, 2, 3, 4, 5].map((min, k) => (
                 <MenuItem key={k} value={min}>
                   {min}
                 </MenuItem>
@@ -51,12 +63,12 @@ const ItemTimeSelector = ({ handleClick }) => {
               Segundos
             </InputLabel>
             <Select
-              labelId="custom-task-duration-mins"
-              id="custom-task-duration-mins"
-              value={"1"}
-              onChange={evn => console.log(evn.target.value)}
+              labelId="custom-task-duration-sec"
+              id="custom-task-duration-sec"
+              value={custom.sec}
+              onChange={evn => setCustom({ ...custom, sec: evn.target.value })}
             >
-              {[1, 2, 3, 4, 5].map((sec, k) => (
+              {[0, 1, 2, 3, 4, 5].map((sec, k) => (
                 <MenuItem key={k} value={sec}>
                   {sec}
                 </MenuItem>

@@ -43,3 +43,16 @@ export function parseTimer(time) {
     seconds
   };
 }
+export function parseTime(sec) {
+  const total = sec;
+  const seconds = Math.floor(sec % 60);
+  const minutes = Math.floor((total / 60) % 60);
+  const hours = Math.floor((total / (60 * 60)) % 24);
+
+  return {
+    total,
+    hours,
+    minutes,
+    seconds
+  };
+}

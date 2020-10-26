@@ -10,6 +10,11 @@ const listReducer = (state = [], action) => {
         ...state,
         sort: action.payload
       };
+    case "SET_LIST_FILTERS":
+      return {
+        ...state,
+        filters: action.payload
+      };
     case "REMOVE_TASK_FROM_LIST":
       return {
         ...state,

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setListSortType as _setListSortType } from "../actions";
+import { setListFilters as _setListFilters } from "../actions";
 import { removeTaskFromList as _removeTaskFromList } from "../actions";
 import { sortList } from "../utils/sortList";
 import { filterList } from "../utils/filterList";
@@ -12,22 +13,33 @@ import NewItem from "../components/NewItem";
 
 const List = props => {
   const [newTask, setNewTask] = useState(false); //To expand o close the newTask form
-  const [editTask, setEditTask] = useState(false); //To expand o close the newTask form
+  const [editTask, setEditTask] = useState(false); //To expand o close the task form
   const [sortedList, setSortedList] = useState([]); //To expand o close the newTask form
   const {
     setNewTaskToList,
+    listName,
     setCurrentTask,
     removeTaskFromList,
     currentTask,
     list,
     listSortType,
     setListSortType,
-    listFilterType
+    setListFilters,
+    listFilters
   } = props;
 
+  //To generate the list depending the app state "sort and filters"
+  const generateCurrentList = (list, sortType, filters) => {
+    let _list = [...list];
+    _list = filterList.byOptions(list, filters);
+    _list = sortList.by(_list, { type: sortType });
+    return _list;
+  };
+
   useEffect(() => {
+    console.log(generateCurrentList(list, listSortType, listFilters));
     setSortedList(sortList.by(list, { type: listSortType }));
-  }, [listSortType, list]);
+  }, [listSortType, list, listFilters]);
 
   const handleCreateNewTask = () => {
     setNewTask(true);
@@ -41,6 +53,9 @@ const List = props => {
   };
   const handleCancelNewTask = () => {
     setNewTask(false);
+  };
+  const handleCancelEditTask = () => {
+    setEditTask(null);
   };
   const handleEditTask = id => {
     editTask ? setEditTask(null) : setEditTask(id);
@@ -66,18 +81,25 @@ const List = props => {
   const handleListSortType = type => {
     setListSortType(type);
   };
+  const handleListFilters = filters => {
+    setListFilters(filters);
+  };
 
   return (
     <div>
       <ListItemHeader
         handleListSortType={handleListSortType}
+        handleListFilters={handleListFilters}
         data={currentTask}
+        sortType={listSortType}
+        listName={listName}
       ></ListItemHeader>
       <div className="list__items">
         {sortedList.map(data => (
           <Item
             expand={editTask === data.id}
             handleEditTask={handleEditTask}
+            handleCancel={handleCancelEditTask}
             key={data.id}
             handleDeleteTask={handleDeleteTask}
             data={data}
@@ -96,18 +118,20 @@ const List = props => {
 const mapStateToProps = state => ({
   currentTask: state.currentTask.data,
   list: state.list.data.tasks || [],
+  listName: state.list.data.name,
   listSortType: state.list.sort,
-  listFilterType: state.list.filter
+  listFilters: state.list.filters
 });
 const mapDispatchToProps = {
   setNewTaskToList: _setNewTaskToList,
   setCurrentTask: _setCurrentTask,
   removeTaskFromList: _removeTaskFromList,
-  setListSortType: _setListSortType
+  setListSortType: _setListSortType,
+  setListFilters: _setListFilters
 };
 export default connect(mapStateToProps, mapDispatchToProps)(List);
 
-// //To generate the list depending the app state (list and sort)
+//To generate the list depending the app state (list and sort)
 // function generateCurrentList(list, sortType, filters) {
 //   let _list = [...list];
 //   _list = filterList.byOptions(list, filters);
@@ -123,3 +147,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(List);
 //   "PRUEBA con name y short",
 //   generateCurrentList(list, "name", { duration: "short" })
 // );
+
+// function generateCurrentList(list, sortType, filters){
+//   let _list = []
+//   _list = filterList.byOptions(list, filters)
+//   _list = sortList.by(_list, { type: listSortType })
+//   return _list
+// }

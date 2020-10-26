@@ -16,15 +16,15 @@ class FilterList {
     let filteredList;
     switch (duration) {
       case "short":
-        filteredList = _list.filter(task => task.duration < 10);
+        filteredList = _list.filter(task => task.duration < 1800);
         break;
       case "middle":
         filteredList = _list.filter(
-          task => task.duration >= 10 && task.duration < 20
+          task => task.duration >= 1800 && task.duration < 3600
         );
         break;
       case "large":
-        filteredList = _list.filter(task => task.duration >= 20);
+        filteredList = _list.filter(task => task.duration >= 3600);
         break;
       default:
     }
@@ -61,7 +61,7 @@ class FilterList {
       _list = this.byPeriod({ period: options.period, list });
     }
     if (options.completed) {
-      _list = this.byCompleted();
+      _list = this.byCompleted(list);
     }
     return _list;
   }

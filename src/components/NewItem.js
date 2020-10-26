@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import ItemOptions from "./ItemOptions";
+import ItemTimeSelector from "../components/ItemTimeSelector";
+import ItemDescription from "../components/ItemDescription";
 const NewItem = props => {
   const [inputValues, setInputValues] = useState({
-    name: "Mi Lista ",
+    name: "Mi Lista Nueva ",
     duration: "5000",
     description: ""
   });
@@ -12,7 +16,9 @@ const NewItem = props => {
     handleSaveNewTask,
     expand
   } = props;
-
+  const handleTaskDuration = ({ duration }) => {
+    setInputValues({ ...inputValues, duration });
+  };
   const handleSubmit = evn => {
     evn.preventDefault();
     handleSaveNewTask(inputValues);
@@ -23,7 +29,7 @@ const NewItem = props => {
     setInputValues({ ...inputValues, [fieldName]: fieldValue });
   };
   const handleClick = evn => {
-    switch (evn.target.value) {
+    switch (evn.currentTarget.value) {
       case "cancel":
         handleCancelNewTask();
         break;
@@ -35,32 +41,46 @@ const NewItem = props => {
   const handleCancel = () => {
     handleCancelNewTask();
   };
+  const handleDescription = description => {
+    setInputValues({ ...inputValues, description });
+  };
   return (
     <div className="new-item">
       <div className="new-item__main">
-        <button onClick={handleClick} value="new">
-          New Item Works
-        </button>
+        {!expand && (
+          <div>
+            <button
+              className="check-button check-button--checked"
+              onClick={handleClick}
+              value="new"
+            >
+              <AddIcon />
+            </button>
+            <span>Crear Tarea</span>
+          </div>
+        )}
+        {expand && (
+          <div className="new-item__name">
+            <input
+              onChange={handleChange}
+              name="name"
+              value={inputValues.name}
+            ></input>
+          </div>
+        )}
       </div>
-
       {expand && (
         <form>
-          <input
-            onChange={handleChange}
-            name="name"
-            value={inputValues.name}
-          ></input>
-          <input
-            onChange={handleChange}
-            name="duration"
-            value={inputValues.duration}
-          ></input>
-          <input
-            onChange={handleChange}
-            name="description"
-            value={inputValues.description}
-          ></input>
-
+          <div className="new-item__options">
+            <ItemTimeSelector
+              handleClick={handleTaskDuration}
+              duration={inputValues.duration}
+            />
+            <ItemDescription
+              description={inputValues.description}
+              setDescription={handleDescription}
+            />
+          </div>
           <Button onClick={handleCancel} value="cancel">
             Cancel
           </Button>

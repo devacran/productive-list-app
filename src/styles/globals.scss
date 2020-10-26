@@ -26,7 +26,16 @@ button {
   padding: 0;
   height: 47px;
   cursor: pointer;
+  &--transparent {
+    height: 31px;
+    width: 27px;
+    color: white;
+    background-color: $transparent-color;
+    border: 1px solid white;
+    border-radius: 7px;
+  }
 }
+
 .check-button {
   display: flex;
   border-radius: 50%;

@@ -25,6 +25,11 @@ export const setListSortType = payload => ({
   type: "SET_LIST_SORT_TYPE",
   payload
 });
+export const setListFilters = payload => ({
+  type: "SET_LIST_FILTERS",
+  payload
+});
+
 export const setTaskTimer = payload => ({
   type: "SET_TASK_TIMER",
   payload

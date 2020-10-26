@@ -66,16 +66,14 @@ const Statistics = props => {
   };
 
   const graph = useRef(null);
-  //See https://www.chartjs.org/docs/latest/charts/line.html for mor info
+  //See https://www.chartjs.org/docs/latest/charts/line.html for more info
   const config = {
     type: "line",
     data: {
-      labels: generateLabels("week"),
+      labels: generateLabels("week"), //To generateLabes for the week days
       datasets: [
         {
           label: "Tiempo Invertido",
-          // backgroundColor: window.chartColors.red,
-          // borderColor: window.chartColors.red,
           data: generateValues({
             list,
             period: "week",
