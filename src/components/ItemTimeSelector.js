@@ -26,13 +26,13 @@ const ItemTimeSelector = props => {
           Duracion: {parseTimer(duration).hours} hrs
           {parseTimer(duration).minutes} mins
         </div>
-        <Button onClick={() => handleClick({ duration: 125000 })} size="small">
+        <Button onClick={() => handleClick({ duration: 1800 })} size="small">
           Corta
         </Button>
-        <Button onClick={() => handleClick({ duration: 1250000 })} size="small">
+        <Button onClick={() => handleClick({ duration: 2700 })} size="small">
           Mediana
         </Button>
-        <Button onClick={() => handleClick({ duration: 1250000 })} size="small">
+        <Button onClick={() => handleClick({ duration: 3600 })} size="small">
           Larga
         </Button>
         <Button onClick={() => setCustom({ min: 0, sec: 0 })} size="small">

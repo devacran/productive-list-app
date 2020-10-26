@@ -14,7 +14,7 @@ import NewItem from "../components/NewItem";
 const List = props => {
   const [newTask, setNewTask] = useState(false); //To expand o close the newTask form
   const [editTask, setEditTask] = useState(false); //To expand o close the task form
-  const [sortedList, setSortedList] = useState([]); //To expand o close the newTask form
+  const [customList, setCustomList] = useState([]); //To expand o close the newTask form
   const {
     setNewTaskToList,
     listName,
@@ -37,8 +37,10 @@ const List = props => {
   };
 
   useEffect(() => {
-    console.log(generateCurrentList(list, listSortType, listFilters));
-    setSortedList(sortList.by(list, { type: listSortType }));
+    // console.log(generateCurrentList(list, listSortType, listFilters));
+    const generatedList = generateCurrentList(list, listSortType, listFilters);
+    setCustomList(generatedList);
+    // setSortedList(sortList.by(list, { type: listSortType }));
   }, [listSortType, list, listFilters]);
 
   const handleCreateNewTask = () => {
@@ -95,7 +97,7 @@ const List = props => {
         listName={listName}
       ></ListItemHeader>
       <div className="list__items">
-        {sortedList.map(data => (
+        {customList.map(data => (
           <Item
             expand={editTask === data.id}
             handleEditTask={handleEditTask}

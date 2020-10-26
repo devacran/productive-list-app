@@ -16,11 +16,12 @@ class FilterList {
     let filteredList;
     switch (duration) {
       case "short":
-        filteredList = _list.filter(task => task.duration < 1800);
+        filteredList = _list.filter(task => task.duration <= 1800);
+        console.log("aqui remo", filteredList);
         break;
       case "middle":
         filteredList = _list.filter(
-          task => task.duration >= 1800 && task.duration < 3600
+          task => task.duration >= 1800 && task.duration <= 3600
         );
         break;
       case "large":
