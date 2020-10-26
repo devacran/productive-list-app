@@ -14,8 +14,8 @@ const ListItemHeader = props => {
       <button onClick={handleClick} value="date">
         date
       </button>
-      <button onClick={handleClick} value="name">
-        name
+      <button onClick={handleClick} value="duration">
+        duration
       </button>
     </div>
   );

@@ -6,7 +6,7 @@ import { setTaskTimer as _setTaskTimerData } from "../actions";
 import Timer from "./Timer";
 import List from "./List";
 
-import { sortListByStartDate } from "../utils/sortList";
+import { sortList } from "../utils/sortList";
 
 const Home = props => {
   const { list, setCurrentTask, setTaskTimerData } = props;
@@ -16,7 +16,7 @@ const Home = props => {
     //The first step to do is load the list info
     //Then set the current task in the state (the lastest by default)
     let taskList = list;
-    taskList = sortListByStartDate(list);
+    taskList = sortList.by(taskList, { type: "date" });
     const currentTask = taskList.shift();
     setCurrentTask(currentTask);
     setTaskTimerData({

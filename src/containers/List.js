@@ -4,7 +4,7 @@ import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setListSortType as _setListSortType } from "../actions";
 import { removeTaskFromList as _removeTaskFromList } from "../actions";
-import { sortListByStartDate, sortListByName } from "../utils/sortList";
+import { sortList } from "../utils/sortList";
 import { filterList } from "../utils/filterList";
 import ListItemHeader from "../components/ListItemHeader";
 import Item from "./Item";
@@ -26,15 +26,9 @@ const List = props => {
   } = props;
 
   useEffect(() => {
-    switch (listSortType) {
-      case "date":
-        setSortedList(sortListByStartDate(list));
-        break;
-      case "name":
-        setSortedList(sortListByName(list));
-        break;
-    }
+    setSortedList(sortList.by(list, { type: listSortType }));
   }, [listSortType, list]);
+
   const handleCreateNewTask = () => {
     setNewTask(true);
   };
