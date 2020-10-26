@@ -2,18 +2,18 @@ class Timer {
   constructor() {
     this.remaindTime = 0;
   }
-  //config state: is used to update the remaind time in app state
-  //config timerSeconds: is the total time to count down
+  //setTimerState: is used to update the remaind time in app state
+  //timerSeconds: is the total time to count down
   config(config) {
     this.timerSeconds = config.seconds || 0;
-    this.setRemindTimeState = config.remindTimeState || function() {};
-    this.setStatusState = config.statusState || function() {};
+    this.setRemindTimeState = config.setRemindTimeState || function() {};
+    this.setTimerState = config.setTimerState || function() {};
+    this.timerState = config.timerState;
     this.remaindTime = this.timerSeconds;
   }
 
   start() {
     const t = setInterval(() => {
-      console.log(this.timerSeconds);
       //each interval rest 1000ms
       this.remaindTime -= 1000;
       //sets the remaind time to global app state
@@ -25,7 +25,7 @@ class Timer {
 
   stop() {
     clearInterval(this.currentTimer);
-    // this.setStatusState("stop");
+    this.timerState === "stop" && this.setTimerState("stop");
   }
 }
 export const timer = new Timer();

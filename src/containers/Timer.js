@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { setTimerStatus as _setTimerStatus } from "../actions";
 import { setTimerRemind as _setTimerRemind } from "../actions";
-import { setCurrentTaskCompleted as _setCurrentTaskCompleted } from "../actions";
+import { updateCurrentTaskData as _updateCurrentTaskData } from "../actions";
+import { updateTaskDataFromList as _updateTaskDataFromList } from "../actions";
 import { timer as countDown } from "../utils/timer";
 import { parseTimer } from "../utils/timer";
 import TimerDisplay from "../components/TimerDisplay";
@@ -13,23 +14,45 @@ const Timer = props => {
     currentTask,
     setTimerStatus,
     setTimerRemind,
-    setCurrentTaskCompleted
+    updateTaskDataFromList,
+    updateCurrentTaskData
   } = props;
   const { timerStatus } = timer;
   const remaindTime = parseTimer(timer.remaindTime);
   useEffect(() => {
-    countDown.config({
-      seconds: timer.remaindTime,
-      remindTimeState: setTimerRemind,
-      statusState: setTimerStatus
-    });
+    countDown.config(
+      {
+        seconds: timer.remaindTime,
+        setRemindTimeState: setTimerRemind,
+        setTimerState: setTimerStatus,
+        timerState: timer.timerStatus
+      },
+      []
+    );
     switch (timerStatus) {
       case "inProgress":
         countDown.start();
+        updateTaskDataFromList({
+          startDate: new Date().toString(),
+          completed: false
+        }); //Sets the current date and completed false to reset if had been started
+        updateCurrentTaskData({
+          startDate: new Date().toString(),
+          completed: false
+        });
         break;
       case "stop":
         countDown.stop();
-        setCurrentTaskCompleted(timer.remaindTime);
+        setTimerRemind(0);
+        updateTaskDataFromList({
+          id: currentTask.id,
+          completed: true,
+          completitionTime: 500
+        }); //Updates the task from list
+        updateCurrentTaskData({
+          completed: true,
+          completitionTime: 500
+        }); //Updates the task from currentTask
         break;
       case "pause":
         countDown.stop();
@@ -52,7 +75,8 @@ const Timer = props => {
 const mapDispatchToProps = {
   setTimerStatus: _setTimerStatus,
   setTimerRemind: _setTimerRemind,
-  setCurrentTaskCompleted: _setCurrentTaskCompleted
+  updateTaskDataFromList: _updateTaskDataFromList,
+  updateCurrentTaskData: _updateCurrentTaskData
 };
 const mapStateToProps = state => ({
   currentTask: state.currentTask.data || {},

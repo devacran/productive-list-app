@@ -46,6 +46,12 @@ const Item = props => {
         break;
       case "check":
         console.log("check");
+        updateTaskDataFromList({
+          id: data.id,
+          completed: data.completed ? false : true, //works as toggle
+          completitionTime: data.completed ? 0 : 1, ////works as toggle
+          endDate: new Date().toString()
+        });
         break;
       case "delete":
         handleDeleteTask(data.id);
