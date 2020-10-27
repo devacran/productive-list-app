@@ -16,7 +16,9 @@ const ListItemHeader = props => {
   };
   return (
     <div className="list-item-header">
-      <div>Trabajando en : {data.name}</div>
+      <div className="list-item-header__current">
+        Trabajando en : {data.name}
+      </div>
       <div className="list-item-header__main">
         <h1>{listName}</h1>
         <button

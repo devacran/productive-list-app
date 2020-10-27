@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
-const TimerDisplay = props => {
-  const { total, hours, minutes, seconds, style } = props;
-  console.log(total, hours, minutes, seconds, style);
+import { parseTimer } from "../utils/timer";
+const ItemTimeDisplay = props => {
+  const { total, hours, minutes, seconds } = parseTimer(props.time);
+  console.log();
   return (
-    <div className={style}>
+    <div>
       <span>
         {hours < 10 ? "0" : ""}
         {hours}
@@ -20,4 +20,4 @@ const TimerDisplay = props => {
     </div>
   );
 };
-export default TimerDisplay;
+export default ItemTimeDisplay;

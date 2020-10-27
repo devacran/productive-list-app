@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { updateCurrentTaskData as _updateCurrentTaskData } from "../actions";
@@ -11,6 +11,10 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { TextField } from "@material-ui/core";
 import ItemTimeSelector from "../components/ItemTimeSelector";
 import ItemDescription from "../components/ItemDescription";
+import TimerDisplay from "../components/TimerDisplay";
+import ItemTimeDisplay from "../components/ItemTimeDisplay";
+import HourglassFullIcon from "@material-ui/icons/HourglassFull";
+import WatchLaterIcon from "@material-ui/icons/WatchLater";
 const Item = props => {
   const {
     timer,
@@ -22,6 +26,7 @@ const Item = props => {
     updateTaskDataFromList,
     handleCancel,
     expand,
+    active,
     data
   } = props;
 
@@ -82,7 +87,7 @@ const Item = props => {
     setInputValues({ ...inputValues, description });
   };
   return (
-    <div className="item">
+    <div className={active ? "item item--active" : "item"}>
       <div className="item__main">
         {!expand && (
           <div>
@@ -119,9 +124,15 @@ const Item = props => {
 
           {!expand && !data.completed && (
             <div className="item__duration">
-              Tiempo:
-              {parseTimer(data.duration).hours} hrs
-              {parseTimer(data.duration).minutes} mins
+              <WatchLaterIcon />
+              <ItemTimeDisplay time={data.duration} />
+            </div>
+          )}
+
+          {!expand && data.completed && (
+            <div className="item__duration">
+              <WatchLaterIcon />
+              <ItemTimeDisplay time={data.completitionTime} />
             </div>
           )}
         </div>

@@ -18,8 +18,7 @@ const Timer = props => {
     updateCurrentTaskData
   } = props;
   const { timerStatus } = timer;
-  const remaindTime = parseTimer(timer.remaindTime);
-
+  const parsedRemaindTime = parseTimer(timer.remaindTime);
   const calcCompletitionTime = (startDate, endDate) => {
     const sd = Date.parse(startDate);
     const ed = Date.parse(endDate);
@@ -40,14 +39,16 @@ const Timer = props => {
     switch (timerStatus) {
       case "inProgress":
         countDown.start();
-        updateTaskDataFromList({
-          startDate: new Date().toString(),
-          completed: false
-        }); //Sets the current date and completed false to reset if had been started
-        updateCurrentTaskData({
-          startDate: new Date().toString(),
-          completed: false
-        });
+        if (timer.remaindTime === currentTask.duration) {
+          updateTaskDataFromList({
+            startDate: new Date().toString(),
+            completed: false
+          }); //Sets the current date and completed false to reset if had been started
+          updateCurrentTaskData({
+            startDate: new Date().toString(),
+            completed: false
+          });
+        }
         break;
       case "stop":
         const endDate = new Date().toString();
@@ -78,7 +79,7 @@ const Timer = props => {
   return (
     <div className="timer">
       <div className="timer__container">
-        <TimerDisplay {...remaindTime} />
+        <TimerDisplay {...parsedRemaindTime} style={"timer-display"} />
         <TimerButton
           timerStatus={timerStatus}
           setTimerStatus={setTimerStatus}

@@ -4,6 +4,7 @@ import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setListSortType as _setListSortType } from "../actions";
 import { setListFilters as _setListFilters } from "../actions";
+import { setTaskTimer as _setTaskTimerData } from "../actions";
 import { removeTaskFromList as _removeTaskFromList } from "../actions";
 import { sortList } from "../utils/sortList";
 import { filterList } from "../utils/filterList";
@@ -17,6 +18,7 @@ const List = props => {
   const [customList, setCustomList] = useState([]); //To expand o close the newTask form
   const {
     setNewTaskToList,
+    setTaskTimerData,
     listName,
     setCurrentTask,
     removeTaskFromList,
@@ -25,7 +27,8 @@ const List = props => {
     listSortType,
     setListSortType,
     setListFilters,
-    listFilters
+    listFilters,
+    timer
   } = props;
 
   //To generate the list depending the app state "sort and filters"
@@ -77,7 +80,15 @@ const List = props => {
     };
     setNewTask(false);
     setNewTaskToList(res);
-    setCurrentTask(res);
+    if (timer.timerStatus !== "inProgress") {
+      console.log("error?");
+      setCurrentTask(res); //Sets current Task and timer only if timer is not in progress
+      setTaskTimerData({
+        duration: res.duration,
+        remaindTime: res.duration,
+        timerStatus: "idle"
+      });
+    }
   };
 
   const handleListSortType = type => {
@@ -100,6 +111,7 @@ const List = props => {
         {customList.map(data => (
           <Item
             expand={editTask === data.id}
+            active={currentTask.id === data.id}
             handleEditTask={handleEditTask}
             handleCancel={handleCancelEditTask}
             key={data.id}
@@ -122,37 +134,15 @@ const mapStateToProps = state => ({
   list: state.list.data.tasks || [],
   listName: state.list.data.name,
   listSortType: state.list.sort,
-  listFilters: state.list.filters
+  listFilters: state.list.filters,
+  timer: state.timer
 });
 const mapDispatchToProps = {
   setNewTaskToList: _setNewTaskToList,
   setCurrentTask: _setCurrentTask,
   removeTaskFromList: _removeTaskFromList,
   setListSortType: _setListSortType,
-  setListFilters: _setListFilters
+  setListFilters: _setListFilters,
+  setTaskTimerData: _setTaskTimerData
 };
 export default connect(mapStateToProps, mapDispatchToProps)(List);
-
-//To generate the list depending the app state (list and sort)
-// function generateCurrentList(list, sortType, filters) {
-//   let _list = [...list];
-//   _list = filterList.byOptions(list, filters);
-//   if (sortType === "date") {
-//     _list = sortListByStartDate(list);
-//   }
-//   if (sortType === "name") {
-//     _list = sortListByName(list);
-//   }
-//   return _list;
-// }
-// console.log(
-//   "PRUEBA con name y short",
-//   generateCurrentList(list, "name", { duration: "short" })
-// );
-
-// function generateCurrentList(list, sortType, filters){
-//   let _list = []
-//   _list = filterList.byOptions(list, filters)
-//   _list = sortList.by(_list, { type: listSortType })
-//   return _list
-// }

@@ -1,5 +1,5 @@
 .timer-display {
-  font-size: 100px;
+  font-size: clamp(5vw, 20vw, 100px);
   color: $white-color;
   font-weight: bold;
 }
