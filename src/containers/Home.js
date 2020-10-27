@@ -15,6 +15,7 @@ const Home = props => {
   useEffect(() => {
     //The first step to do is load the list info
     //Then set the current task in the state (the lastest by default)
+    //And set the task timer
     let taskList = list;
     taskList = sortList.by(taskList, { type: "date" });
     const currentTask = taskList.shift();

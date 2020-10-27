@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 const TimerDisplay = props => {
   const { total, hours, minutes, seconds, style } = props;
-  console.log(total, hours, minutes, seconds, style);
   return (
     <div className={style}>
       <span>

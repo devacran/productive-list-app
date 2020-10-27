@@ -34,11 +34,26 @@
   &__name {
     cursor: pointer;
   }
+  &__name--cross {
+    text-decoration: line-through;
+  }
+  &__actions {
+    margin-top: 1em;
+  }
   &__duration {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 120px;
+    width: 87px;
+
+    .MuiSvgIcon-root {
+      color: $primary-color;
+    }
+    &--completed {
+      .MuiSvgIcon-root {
+        color: transparent;
+      }
+    }
   }
   &__description {
     button {
@@ -47,5 +62,18 @@
       border: none;
       cursor: pointer;
     }
+  }
+}
+.item-time-selector {
+  margin: 1em 0;
+  &__duration {
+    margin-bottom: 0.5em;
+    display: flex;
+    width: 130px;
+    justify-content: space-between;
+  }
+  .MuiFormControl-root {
+    width: 86px;
+    margin-bottom: 1em;
   }
 }

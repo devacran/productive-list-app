@@ -27,8 +27,11 @@ class SortList {
   sortListByDuration(list) {
     const _list = [...list];
     _list.sort((a, b) => {
-      const da = new Date(a.duration);
-      const db = new Date(b.duration);
+      //If task is completed takes the completitionTime if not takes duration
+      const ta = a.completitionTime ? a.completitionTime : a.duration;
+      const tb = b.completitionTime ? b.completitionTime : b.duration;
+      const da = new Date(ta);
+      const db = new Date(tb);
       return db - da;
     });
     return _list;

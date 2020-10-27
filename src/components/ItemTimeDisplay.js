@@ -2,7 +2,6 @@ import React from "react";
 import { parseTimer } from "../utils/timer";
 const ItemTimeDisplay = props => {
   const { total, hours, minutes, seconds } = parseTimer(props.time);
-  console.log();
   return (
     <div>
       <span>

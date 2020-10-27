@@ -19,6 +19,7 @@ const Timer = props => {
   } = props;
   const { timerStatus } = timer;
   const parsedRemaindTime = parseTimer(timer.remaindTime);
+
   const calcCompletitionTime = (startDate, endDate) => {
     const sd = Date.parse(startDate);
     const ed = Date.parse(endDate);
@@ -40,7 +41,9 @@ const Timer = props => {
       case "inProgress":
         countDown.start();
         if (timer.remaindTime === currentTask.duration) {
+          //If this is equal means is start if not is resume
           updateTaskDataFromList({
+            //Only updates the task if have started for the first time
             startDate: new Date().toString(),
             completed: false
           }); //Sets the current date and completed false to reset if had been started

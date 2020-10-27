@@ -7,7 +7,7 @@ import ItemDescription from "../components/ItemDescription";
 const NewItem = props => {
   const [inputValues, setInputValues] = useState({
     name: "Mi Lista Nueva ",
-    duration: "5000",
+    duration: 1800,
     description: ""
   });
   const {
@@ -70,7 +70,7 @@ const NewItem = props => {
         )}
       </div>
       {expand && (
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="new-item__options">
             <ItemTimeSelector
               handleClick={handleTaskDuration}
@@ -84,7 +84,7 @@ const NewItem = props => {
           <Button onClick={handleCancel} value="cancel">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary" type="submit">
+          <Button color="primary" type="submit">
             Save
           </Button>
         </form>

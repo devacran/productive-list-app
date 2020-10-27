@@ -23,17 +23,17 @@ const ListFilterMenu = props => {
       <div className="list-filter-menu__options">
         <div>
           <FormControl variant="filled" className={""}>
-            <InputLabel id="filter-menu-duration">Duracion</InputLabel>
+            <InputLabel id="filter-menu-duration">Duración</InputLabel>
             <Select
               labelId="filter-menu-options-duration"
               id="filter-menu-options-duration"
               value={filters.duration || "none"}
               onChange={handleChange}
             >
-              <MenuItem value={"none"}>todas</MenuItem>
-              <MenuItem value={"short"}>short</MenuItem>
-              <MenuItem value={"middle"}>middle</MenuItem>
-              <MenuItem value={"large"}>large</MenuItem>
+              <MenuItem value={"none"}>Todas</MenuItem>
+              <MenuItem value={"short"}>Corta</MenuItem>
+              <MenuItem value={"middle"}>Mediana</MenuItem>
+              <MenuItem value={"large"}>Larga</MenuItem>
             </Select>
           </FormControl>
         </div>

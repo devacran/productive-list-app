@@ -10,9 +10,10 @@
     margin-bottom: 1em;
   }
   &__options {
+    width: 100%;
+    padding: $box-padding-sm;
     background-color: $transparent-color;
     border-radius: $box-radius-sm;
-    width: 100%;
   }
   &__current {
     font-size: 18px;

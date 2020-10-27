@@ -7,10 +7,33 @@ import {
   Select,
   MenuItem
 } from "@material-ui/core";
+import ItemTimeDisplay from "./ItemTimeDisplay";
 import { parseTimer } from "../utils/timer";
 const ItemTimeSelector = props => {
   const { handleClick, duration } = props;
   const [custom, setCustom] = useState(false);
+  const generateSecRange = () => {
+    let n = 0;
+    let s = [];
+    while (n < 60) {
+      s.push(n);
+      n++;
+    }
+    return s;
+  };
+  const generateMinRange = () => {
+    let n = 0;
+    let s = [];
+    while (n < 121) {
+      s.push(n);
+      n++;
+    }
+    return s;
+  };
+
+  const secRange = generateSecRange();
+  const minRange = generateMinRange();
+
   useEffect(() => {
     if (custom) {
       const min = custom.min * 60;
@@ -20,11 +43,11 @@ const ItemTimeSelector = props => {
     }
   }, [custom]);
   return (
-    <>
+    <div className="item-time-selector">
       <div>
-        <div>
-          Duracion: {parseTimer(duration).hours} hrs
-          {parseTimer(duration).minutes} mins
+        <div className="item-time-selector__duration">
+          <span>Duracion:</span>
+          <ItemTimeDisplay time={duration} />
         </div>
         <Button onClick={() => handleClick({ duration: 1800 })} size="small">
           Corta
@@ -40,7 +63,7 @@ const ItemTimeSelector = props => {
         </Button>
       </div>
       {custom && (
-        <>
+        <div className="item-time-selector__custom">
           <FormControl variant="filled" className={"classes.formControl"}>
             <InputLabel id="demo-simple-select-filled-label">
               Minutos
@@ -51,7 +74,7 @@ const ItemTimeSelector = props => {
               value={custom.min}
               onChange={evn => setCustom({ ...custom, min: evn.target.value })}
             >
-              {[0, 1, 2, 3, 4, 5].map((min, k) => (
+              {minRange.map((min, k) => (
                 <MenuItem key={k} value={min}>
                   {min}
                 </MenuItem>
@@ -68,16 +91,16 @@ const ItemTimeSelector = props => {
               value={custom.sec}
               onChange={evn => setCustom({ ...custom, sec: evn.target.value })}
             >
-              {[0, 1, 2, 3, 4, 5].map((sec, k) => (
+              {secRange.map((sec, k) => (
                 <MenuItem key={k} value={sec}>
                   {sec}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 export default ItemTimeSelector;

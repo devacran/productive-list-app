@@ -50,7 +50,6 @@ const Item = props => {
         handleEditTask(data.id); //expand item, works as toggle
         break;
       case "check":
-        console.log("check");
         updateTaskDataFromList({
           id: data.id,
           completed: data.completed ? false : true, //works as toggle
@@ -108,7 +107,12 @@ const Item = props => {
         )}
         <div className="item__label">
           {!expand && (
-            <div className="item__name" onClick={handleSelectItem}>
+            <div
+              className={
+                data.completed ? "item__name item__name--cross" : "item__name"
+              }
+              onClick={handleSelectItem}
+            >
               {props.data.name}
             </div>
           )}
@@ -123,14 +127,14 @@ const Item = props => {
           )}
 
           {!expand && !data.completed && (
-            <div className="item__duration">
+            <div className="item__duration ">
               <WatchLaterIcon />
               <ItemTimeDisplay time={data.duration} />
             </div>
           )}
 
           {!expand && data.completed && (
-            <div className="item__duration">
+            <div className="item__duration item__duration--completed">
               <WatchLaterIcon />
               <ItemTimeDisplay time={data.completitionTime} />
             </div>
@@ -160,17 +164,19 @@ const Item = props => {
             description={inputValues.description}
             setDescription={handleDescription}
           />
-          <form onSubmit={handleSubmit}>
-            <Button onClick={handleClick} color="secondary" name="delete">
-              Borrar
-            </Button>
-            <Button onClick={handleClick} name="cancel">
-              Cancel
-            </Button>
-            <Button color="primary" type="submit">
-              Save
-            </Button>
-          </form>
+          <div className="item__actions">
+            <form onSubmit={handleSubmit}>
+              <Button onClick={handleClick} color="secondary" name="delete">
+                Borrar
+              </Button>
+              <Button onClick={handleClick} name="cancel">
+                Cancel
+              </Button>
+              <Button color="primary" type="submit">
+                Save
+              </Button>
+            </form>
+          </div>
         </div>
       )}
     </div>

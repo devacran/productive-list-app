@@ -5,6 +5,13 @@
   grid-template-columns: 1fr 1fr;
   .MuiButton-root {
     background-color: $transparent-color;
+    &:hover {
+      background-color: $active-color;
+    }
+  }
+  h1 {
+    color: $white-color;
+    font-size: 18px;
   }
   &__item-1,
   &__item-2 {

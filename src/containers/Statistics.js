@@ -1,21 +1,24 @@
 import React, { useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { filterList } from "../utils/filterList";
+import { parseTimer } from "../utils/timer";
 import Chart from "chart.js";
 const Statistics = props => {
   const { list } = props;
+  //To generate labels for the chart
   const generateLabels = period => {
     const todayDate = new Date();
     const generateWeek = () => {
       let labels = [];
       for (let i = 0; i < 7; i++) {
-        // const d = todayDate.setDate(todayDate.getDate() - 1);
         let d;
         if (i === 0) {
+          //The first loop uses the current date
           d = todayDate.setDate(todayDate.getDate());
         } else {
+          //Then rest a day to the date
           d = todayDate.setDate(todayDate.getDate() - 1);
-        }
+        } //Convert the date to local string
         const label = new Date(d).toLocaleDateString("es-MX", {
           day: "numeric",
           month: "short"
@@ -32,16 +35,19 @@ const Statistics = props => {
         return [];
     }
   };
+  //Function to generate data for the chart depending to the labels
   const generateValues = (options = {}) => {
     const { period, list, labels } = options;
     const generateWeek = () => {
       let values = [];
       const v = list
         .map(task => {
+          //creates a list with completitionTime and task end date
           const v = { time: task.completitionTime, date: task.endDate };
           return v;
         })
         .forEach(task => {
+          //then group the elements by date
           const taskDate = new Date(task.date).toLocaleDateString("es-MX", {
             day: "numeric",
             month: "short"
@@ -53,9 +59,11 @@ const Statistics = props => {
           }
         });
       let generatedValues = [];
+      //To create a list for each day of the week and assign the time values
       labels.forEach((label, i) => {
         if (values[label]) {
-          generatedValues[i] = values[label];
+          //if a label matches with values index asign the value
+          generatedValues[i] = Math.floor(values[label] / 60); //to set value minutes
         } else {
           generatedValues[i] = 0;
         }
@@ -79,10 +87,11 @@ const Statistics = props => {
       labels: generateLabels("week"), //To generateLabes for the week days
       datasets: [
         {
-          label: "Tiempo Invertido",
+          label: "Minutos Invertidos",
           data: generateValues({
             list,
             period: "week",
+            group: "minutes",
             labels: generateLabels("week")
           }),
           fill: false
@@ -129,7 +138,6 @@ const Statistics = props => {
   };
   useEffect(() => {
     const filteredList = filterList.byPeriod({ list, period: "week" });
-    console.log("lista filtrada en grafica", filteredList);
     const ctx = graph.current.getContext("2d");
 
     const myLineChart = new Chart(ctx, config);
