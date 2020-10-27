@@ -37,6 +37,13 @@ button {
   }
 }
 
+.show-more-button {
+  background-color: transparent;
+  font-weight: bolder;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
 .check-button {
   display: flex;
   border-radius: 50%;

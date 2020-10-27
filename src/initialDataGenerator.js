@@ -35,4 +35,3 @@ export const initialDataGenerator = () => {
 
   return taskList;
 };
-console.log(initialDataGenerator());

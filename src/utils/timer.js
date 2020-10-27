@@ -14,7 +14,7 @@ class Timer {
 
   start() {
     const t = setInterval(() => {
-      //each interval rest 1000ms
+      //each interval rest 1 second
       this.remaindTime -= 1;
       //sets the remaind time to global app state
       this.setRemindTimeState(this.remaindTime);
@@ -24,26 +24,12 @@ class Timer {
   }
 
   stop() {
-    console.log("hola");
     clearInterval(this.currentTimer);
     this.timerState !== "pause" && this.setTimerState("stop");
   }
 }
-export const timer = new Timer();
+export const timer = new Timer(); //To have a singleton and returns a unique instance
 
-// export function parseTimer(time) {
-//   const total = time;
-//   const seconds = Math.floor((total / 1000) % 60);
-//   const minutes = Math.floor((total / 1000 / 60) % 60);
-//   const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-//
-//   return {
-//     total,
-//     hours,
-//     minutes,
-//     seconds
-//   };
-// }
 export function parseTimer(sec) {
   const total = sec;
   const seconds = Math.floor(sec % 60);

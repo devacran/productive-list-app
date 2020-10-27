@@ -15,7 +15,13 @@ import NewItem from "../components/NewItem";
 const List = props => {
   const [newTask, setNewTask] = useState(false); //To expand o close the newTask form
   const [editTask, setEditTask] = useState(false); //To expand o close the task form
-  const [customList, setCustomList] = useState([]); //To expand o close the newTask form
+
+  const [customList, setCustomList] = useState([]); //List filtered and sorted by the user
+
+  //the final list showed to the user
+  const [showedItemsQty, setShowedItemsQty] = useState(5); //Qty of showed items
+  const [showedList, setShowedList] = useState([]); //Qty of showed items
+
   const {
     setNewTaskToList,
     setTaskTimerData,
@@ -40,10 +46,12 @@ const List = props => {
   };
 
   useEffect(() => {
-    // console.log(generateCurrentList(list, listSortType, listFilters));
+    setShowedList(customList.slice(0, showedItemsQty)); //Sets showed list with increments of 5
+  }, [showedItemsQty, customList]);
+
+  useEffect(() => {
     const generatedList = generateCurrentList(list, listSortType, listFilters);
     setCustomList(generatedList);
-    // setSortedList(sortList.by(list, { type: listSortType }));
   }, [listSortType, list, listFilters]);
 
   const handleCreateNewTask = () => {
@@ -97,6 +105,9 @@ const List = props => {
   const handleListFilters = filters => {
     setListFilters(filters);
   };
+  const handleShowMore = () => {
+    setShowedItemsQty(showedItemsQty + 5);
+  };
 
   return (
     <div>
@@ -108,7 +119,7 @@ const List = props => {
         listName={listName}
       ></ListItemHeader>
       <div className="list__items">
-        {customList.map(data => (
+        {showedList.map(data => (
           <Item
             expand={editTask === data.id}
             active={currentTask.id === data.id}
@@ -120,6 +131,13 @@ const List = props => {
           />
         ))}
       </div>
+      {customList.length > showedList.length && (
+        <div className="list__show-more">
+          <button className={"show-more-button"} onClick={handleShowMore}>
+            + Mostrar mas
+          </button>
+        </div>
+      )}
       <NewItem
         expand={newTask}
         handleCreateNewTask={handleCreateNewTask}

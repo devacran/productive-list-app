@@ -14,18 +14,31 @@ class FilterList {
     const { duration, list } = options;
     const _list = [...list]; //to avoid mutate the original list
     let filteredList;
+    //To filter the list this function takes completitionTime if task have been finished or duration if not
     switch (duration) {
       case "short":
-        filteredList = _list.filter(task => task.duration <= 1800);
-        console.log("aqui remo", filteredList);
+        filteredList = _list.filter(task => {
+          const taskDuration = task.completitionTime
+            ? task.completitionTime
+            : task.duration;
+          return taskDuration <= 1800;
+        });
         break;
       case "middle":
-        filteredList = _list.filter(
-          task => task.duration >= 1800 && task.duration <= 3600
-        );
+        filteredList = _list.filter(task => {
+          const taskDuration = task.completitionTime
+            ? task.completitionTime
+            : task.duration;
+          return taskDuration >= 1800 && taskDuration <= 3600;
+        });
         break;
       case "large":
-        filteredList = _list.filter(task => task.duration >= 3600);
+        filteredList = _list.filter(task => {
+          const taskDuration = task.completitionTime
+            ? task.completitionTime
+            : task.duration;
+          return taskDuration >= 3600;
+        });
         break;
       default:
     }
@@ -67,4 +80,4 @@ class FilterList {
     return _list;
   }
 }
-export const filterList = new FilterList();
+export const filterList = new FilterList(); //To have a singleton
