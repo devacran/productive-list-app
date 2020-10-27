@@ -87,7 +87,7 @@ const Item = props => {
   };
   return (
     <div className={active ? "item item--active" : "item"}>
-      <div className="item__main">
+      <div className={!expand ? "item__main" : "item__main item__main--expand"}>
         {!expand && (
           <div>
             <button

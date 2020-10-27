@@ -13,6 +13,9 @@
     grid-template-columns: 1fr 8fr 1fr;
     height: calc(75px - #{2 * $box-padding-sm});
   }
+  &__main--expand {
+    display: block;
+  }
   &__main > div {
     display: flex;
     width: 100%;
@@ -25,6 +28,7 @@
     justify-content: space-between;
     padding-right: 1em;
     input {
+      width: 100%;
       outline: none;
       padding: 0;
       border: none;

@@ -5,6 +5,7 @@ import { parseTimer } from "../utils/timer";
 import Chart from "chart.js";
 const Statistics = props => {
   const { list } = props;
+
   //To generate labels for the chart
   const generateLabels = period => {
     const todayDate = new Date();
@@ -81,6 +82,7 @@ const Statistics = props => {
 
   const graph = useRef(null);
   //See https://www.chartjs.org/docs/latest/charts/line.html for more info
+
   const config = {
     type: "line",
     data: {
@@ -94,12 +96,23 @@ const Statistics = props => {
             group: "minutes",
             labels: generateLabels("week")
           }),
-          fill: false
+          fill: false,
+          pointRadius: 3,
+          borderColor: "#05a1ab",
+          pointBorderColor: "#05a1ab",
+          pointBackgroundColor: "#05a1ab",
+          pointHoverBackgroundColor: "#05a1ab",
+          pointHoverBorderColor: "#05a1ab",
+          pointBorderWidth: 7,
+          pointHoverRadius: 7,
+          pointHoverBorderWidth: 1,
+          borderWidth: 4
         }
       ]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       title: {
         display: true,
         text: "Mi resumen semanal"
