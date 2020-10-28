@@ -10,16 +10,6 @@ const currentTaskReducer = (state = {}, action) => {
         ...state,
         data: { ...state.data, ...action.payload }
       };
-    case "SET_CURRENT_TASK_COMPLETED":
-      const completitionTime = action.payload;
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          completed: completitionTime ? true : false,
-          completitionTime
-        }
-      };
     case "SET_CURRENT_TASK_START_DATE":
       return {
         ...state,

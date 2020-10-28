@@ -49,11 +49,11 @@ const Item = props => {
         setInputValues(data); //before item expand fills the fields with item data
         handleEditTask(data.id); //expand item, works as toggle
         break;
-      case "check":
+      case "check": //to mark a task as completed
         updateTaskDataFromList({
           id: data.id,
           completed: data.completed ? false : true, //works as toggle
-          completitionTime: data.completed ? 0 : 1, ////works as toggle
+          completitionTime: data.completed ? null : 0.1, ////works as toggle, if is marked as completed sets 0.1s to avoid bugs
           endDate: new Date().toString()
         });
         break;
@@ -105,17 +105,7 @@ const Item = props => {
             </button>
           </div>
         )}
-        <div className="item__label">
-          {!expand && (
-            <div
-              className={
-                data.completed ? "item__name item__name--cross" : "item__name"
-              }
-              onClick={handleSelectItem}
-            >
-              {props.data.name}
-            </div>
-          )}
+        <div className="item__label" onClick={handleSelectItem}>
           {expand && (
             <form>
               <input
@@ -126,6 +116,16 @@ const Item = props => {
             </form>
           )}
 
+          {!expand && (
+            <div
+              className={
+                data.completed ? "item__name item__name--cross" : "item__name"
+              }
+            >
+              {props.data.name}
+            </div>
+          )}
+
           {!expand && !data.completed && (
             <div className="item__duration ">
               <WatchLaterIcon />
@@ -133,7 +133,7 @@ const Item = props => {
             </div>
           )}
 
-          {!expand && data.completed && (
+          {!expand && data.completed && data.completitionTime > 1 && (
             <div className="item__duration item__duration--completed">
               <WatchLaterIcon />
               <ItemTimeDisplay time={data.completitionTime} />
