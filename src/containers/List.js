@@ -149,7 +149,7 @@ const List = props => {
 };
 const mapStateToProps = state => ({
   currentTask: state.currentTask.data,
-  list: state.list.data.tasks || [],
+  // list: state.list.data.tasks || [],
   listName: state.list.data.name,
   listSortType: state.list.sort,
   listFilters: state.list.filters,

@@ -1,5 +1,7 @@
 import { initialDataGenerator } from "./initialDataGenerator";
 const list = {
+  _id: "5f9da6bc7556b8ad90fcc386",
+  name: "MyList",
   data: {
     id: "123",
     name: "MyList",
