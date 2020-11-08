@@ -47,18 +47,18 @@ const Item = props => {
     switch (evn.currentTarget.name) {
       case "edit":
         setInputValues(data); //before item expand fills the fields with item data
-        handleEditTask(data.id); //expand item, works as toggle
+        handleEditTask(data._id); //expand item, works as toggle
         break;
       case "check": //to mark a task as completed
         updateTaskDataFromList({
-          id: data.id,
+          _id: data._id,
           completed: data.completed ? false : true, //works as toggle
           completitionTime: data.completed ? null : 0.1, ////works as toggle, if is marked as completed sets 0.1s to avoid bugs
           endDate: new Date().toString()
         });
         break;
       case "delete":
-        handleDeleteTask(data.id);
+        handleDeleteTask(data._id);
         break;
       case "cancel":
         handleCancel();

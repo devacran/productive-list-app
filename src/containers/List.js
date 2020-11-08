@@ -60,10 +60,10 @@ const List = props => {
     setCustomList(generatedList);
   }, [listSortType, list, listFilters]);
 
-  const handleDeleteTask = id => {
+  const handleDeleteTask = _id => {
     //try catch to PUT in API, then it must return success or error
-    removeTaskFromList(id);
-    if (currentTask.id === id) {
+    removeTaskFromList(_id);
+    if (currentTask._id === _id) {
       setCurrentTask(list.shift());
     }
   };
@@ -71,8 +71,8 @@ const List = props => {
   const handleCancelEditTask = () => {
     setEditTask(null);
   };
-  const handleEditTask = id => {
-    editTask ? setEditTask(null) : setEditTask(id);
+  const handleEditTask = _id => {
+    editTask ? setEditTask(null) : setEditTask(_id);
   };
 
   const handleListSortType = type => {
@@ -97,11 +97,11 @@ const List = props => {
       <div className="list__items">
         {showedList.map(data => (
           <Item
-            expand={editTask === data.id}
-            active={currentTask.id === data.id}
+            expand={editTask === data._id}
+            active={currentTask._id === data._id}
             handleEditTask={handleEditTask}
             handleCancel={handleCancelEditTask}
-            key={data.id}
+            key={data._id}
             handleDeleteTask={handleDeleteTask}
             data={data}
           />

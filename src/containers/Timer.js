@@ -62,7 +62,7 @@ const Timer = props => {
         countDown.stop();
         setTimerRemind(0);
         updateTaskDataFromList({
-          id: currentTask.id,
+          _id: currentTask._id,
           completed: true,
           endDate,
           completitionTime
