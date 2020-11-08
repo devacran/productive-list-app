@@ -5,6 +5,11 @@ const listReducer = (state = [], action) => {
         ...state,
         data: { ...state.data, tasks: [...state.data.tasks, action.payload] }
       };
+    case "SET_LIST_DATA":
+      return {
+        ...state,
+        data: action.payload
+      };
     case "SET_LIST_SORT_TYPE":
       return {
         ...state,

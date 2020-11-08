@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setTaskTimer as _setTaskTimerData } from "../actions";
+import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import ItemOptions from "../components/ItemOptions";
@@ -14,6 +15,7 @@ const NewItem = props => {
     setCurrentTask,
     setTaskTimerData,
     setTaskTimer,
+    setNewTaskToList,
     timer,
     currentList
   } = props;
@@ -96,8 +98,11 @@ const NewItem = props => {
         <CreateTaskMutation>
           {([create, { data }]) => {
             useEffect(() => {
-              data && updateTimerData(data.createTask);
-              data && setNewTask(false);
+              if (data) {
+                setNewTaskToList(data.createTask);
+                updateTimerData(data.createTask);
+                setNewTask(false);
+              }
             }, [data]);
             return (
               <form
@@ -142,6 +147,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   setCurrentTask: _setCurrentTask,
+  setNewTaskToList: _setNewTaskToList,
   setTaskTimerData: _setTaskTimerData
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NewItem);

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { setListData as _setListData } from "../actions";
 import { connect } from "react-redux";
 
 import { gql, useQuery, useMutation } from "@apollo/client";
@@ -22,14 +23,24 @@ const GET_LIST = gql`
     }
   }
 `;
-const WithListData = ({ children, currentList }) => {
+const WithListData = props => {
+  const { children, currentList, setListData, currentListTasks } = props;
   const { data = {}, loading, error } = useQuery(GET_LIST, {
     variables: { listID: currentList }
   });
-  const listData = data.getList ? data.getList.tasks : [];
-  return children({ data: listData, loading, error });
+  useEffect(() => {
+    if (data.getList) {
+      setListData(data.getList);
+    }
+  }, [data]);
+
+  return children({ data: currentListTasks, loading, error });
 };
 const mapStateToProps = state => ({
-  currentList: state.list._id
+  currentList: state.list._id,
+  currentListTasks: state.list.data.tasks
 });
-export default connect(mapStateToProps)(WithListData);
+const mapDispatchToProps = {
+  setListData: _setListData
+};
+export default connect(mapStateToProps, mapDispatchToProps)(WithListData);

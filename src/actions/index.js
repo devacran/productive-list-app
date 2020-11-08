@@ -17,6 +17,10 @@ export const setNewTaskToList = payload => ({
   type: "SET_NEW_TASK_TO_LIST",
   payload
 });
+export const setListData = payload => ({
+  type: "SET_LIST_DATA",
+  payload
+});
 export const removeTaskFromList = payload => ({
   type: "REMOVE_TASK_FROM_LIST",
   payload
