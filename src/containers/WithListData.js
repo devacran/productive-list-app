@@ -22,14 +22,14 @@ const GET_LIST = gql`
     }
   }
 `;
-const WithListData = ({ children, selectedListID }) => {
+const WithListData = ({ children, currentList }) => {
   const { data = {}, loading, error } = useQuery(GET_LIST, {
-    variables: { listID: selectedListID }
+    variables: { listID: currentList }
   });
   const listData = data.getList ? data.getList.tasks : [];
   return children({ data: listData, loading, error });
 };
 const mapStateToProps = state => ({
-  selectedListID: state.list._id
+  currentList: state.list._id
 });
 export default connect(mapStateToProps)(WithListData);
