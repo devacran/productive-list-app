@@ -16,6 +16,7 @@ import ItemTimeDisplay from "../components/ItemTimeDisplay";
 import { UpdateTaskMutation } from "./UpdateTaskMutation";
 import HourglassFullIcon from "@material-ui/icons/HourglassFull";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
+import { DeleteTaskMutation } from "./DeleteTaskMutation";
 const Item = props => {
   const {
     timer,
@@ -164,7 +165,6 @@ const Item = props => {
           <UpdateTaskMutation>
             {([update, res]) => {
               useEffect(() => {
-                console.log(inputValues);
                 if (res.data) {
                   updateCurrentTaskData(inputValues);
                   updateTaskDataFromList(inputValues); //update item from the list
@@ -175,7 +175,6 @@ const Item = props => {
                 <form
                   onSubmit={evn => {
                     evn.preventDefault();
-                    console.log(inputValues);
                     update({
                       variables: {
                         input: inputValues,
@@ -193,13 +192,26 @@ const Item = props => {
                     setDescription={handleDescription}
                   />
                   <div className="item__actions">
-                    <Button
-                      onClick={handleClick}
-                      color="secondary"
-                      name="delete"
-                    >
-                      Borrar
-                    </Button>
+                    <DeleteTaskMutation>
+                      {([deleteTask, res]) => {
+                        useEffect(() => {
+                          if (res.data) {
+                            handleDeleteTask(data._id);
+                          }
+                        }, [res]);
+                        return (
+                          <Button
+                            onClick={() =>
+                              deleteTask({ variables: { taskID: data._id } })
+                            }
+                            color="secondary"
+                            name="delete"
+                          >
+                            Borrar
+                          </Button>
+                        );
+                      }}
+                    </DeleteTaskMutation>
                     <Button onClick={handleClick} name="cancel">
                       Cancel
                     </Button>

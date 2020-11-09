@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 const UPDATE_TASK = gql`
   mutation updateTask($input: TaskUpdate!, $taskID: ID!) {
-    updateTask(input: $input, taskID: $taskID) {
-      _id
-      name
-      duration
-      description
-      creationDate
-    }
+    updateTask(input: $input, taskID: $taskID)
   }
 `;
 
