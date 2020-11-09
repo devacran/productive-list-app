@@ -42,13 +42,13 @@ const List = props => {
 
   useEffect(() => {
     if (list.length > 0) {
-      const currentTask = list[list.length - 1]; //to get the lastest item by default
-      setCurrentTask(currentTask);
-      setTaskTimerData({
-        duration: currentTask.duration,
-        remaindTime: currentTask.duration,
-        timerStatus: "idle"
-      });
+      // const currentTask = list[list.length - 1]; //to get the lastest item by default
+      // setCurrentTask(currentTask);
+      // setTaskTimerData({
+      //   duration: currentTask.duration,
+      //   remaindTime: currentTask.duration,
+      //   timerStatus: "idle"
+      // });
     }
   }, [list]);
   useEffect(() => {

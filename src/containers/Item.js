@@ -13,6 +13,7 @@ import ItemTimeSelector from "../components/ItemTimeSelector";
 import ItemDescription from "../components/ItemDescription";
 import TimerDisplay from "../components/TimerDisplay";
 import ItemTimeDisplay from "../components/ItemTimeDisplay";
+import { UpdateTaskMutation } from "./UpdateTaskMutation";
 import HourglassFullIcon from "@material-ui/icons/HourglassFull";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 const Item = props => {
@@ -46,7 +47,10 @@ const Item = props => {
   const handleClick = evn => {
     switch (evn.currentTarget.name) {
       case "edit":
-        setInputValues(data); //before item expand fills the fields with item data
+        const _inputValues = { ...data };
+        delete _inputValues._id;
+        delete _inputValues.__typename;
+        setInputValues(_inputValues); //before item expand fills the fields with item data
         handleEditTask(data._id); //expand item, works as toggle
         break;
       case "check": //to mark a task as completed
@@ -67,6 +71,7 @@ const Item = props => {
   };
 
   const handleSubmit = evn => {
+    console.log("deprecated");
     evn.preventDefault();
     //try UPDATE to API then updates the app state
     //axios('apiurl', {data: inputValues})
@@ -156,27 +161,56 @@ const Item = props => {
       </div>
       {expand && (
         <div className="item__options">
-          <ItemTimeSelector
-            handleClick={handleTaskDuration}
-            duration={inputValues.duration}
-          />
-          <ItemDescription
-            description={inputValues.description}
-            setDescription={handleDescription}
-          />
-          <div className="item__actions">
-            <form onSubmit={handleSubmit}>
-              <Button onClick={handleClick} color="secondary" name="delete">
-                Borrar
-              </Button>
-              <Button onClick={handleClick} name="cancel">
-                Cancel
-              </Button>
-              <Button color="primary" type="submit">
-                Save
-              </Button>
-            </form>
-          </div>
+          <UpdateTaskMutation>
+            {([update, res]) => {
+              useEffect(() => {
+                console.log(inputValues);
+                if (res.data) {
+                  updateCurrentTaskData(inputValues);
+                  updateTaskDataFromList(inputValues); //update item from the list
+                  handleEditTask(null); //shrink the item form
+                }
+              }, [res]);
+              return (
+                <form
+                  onSubmit={evn => {
+                    evn.preventDefault();
+                    console.log(inputValues);
+                    update({
+                      variables: {
+                        input: inputValues,
+                        taskID: data._id
+                      }
+                    });
+                  }}
+                >
+                  <ItemTimeSelector
+                    handleClick={handleTaskDuration}
+                    duration={inputValues.duration}
+                  />
+                  <ItemDescription
+                    description={inputValues.description}
+                    setDescription={handleDescription}
+                  />
+                  <div className="item__actions">
+                    <Button
+                      onClick={handleClick}
+                      color="secondary"
+                      name="delete"
+                    >
+                      Borrar
+                    </Button>
+                    <Button onClick={handleClick} name="cancel">
+                      Cancel
+                    </Button>
+                    <Button color="primary" type="submit">
+                      Save
+                    </Button>
+                  </div>
+                </form>
+              );
+            }}
+          </UpdateTaskMutation>
         </div>
       )}
     </div>
