@@ -5,7 +5,6 @@ import Statistics from "./containers/Statistics";
 import { Container } from "@material-ui/core";
 import { Modal as StatsModal } from "@material-ui/core";
 
-import Prueba from "./hocs/Prueba";
 const App = () => {
   const [openStatsModal, setOpenStatsModal] = useState(false);
   const handleCloseStatsModal = () => {
@@ -21,7 +20,6 @@ const App = () => {
         handleCloseStatsModal={handleCloseStatsModal}
       ></Header>
       <Home />
-      <Prueba pulga={"miau"} />
       <StatsModal
         className="stats-modal"
         open={openStatsModal}

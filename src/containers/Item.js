@@ -95,21 +95,49 @@ const Item = props => {
     <div className={active ? "item item--active" : "item"}>
       <div className={!expand ? "item__main" : "item__main item__main--expand"}>
         {!expand && (
-          <div>
-            <button
-              onClick={handleClick}
-              name="check"
-              className={
-                data.completed
-                  ? "check-button check-button--checked"
-                  : "check-button"
-              }
-              color="secondary"
-              aria-label="edit"
-            >
-              <CheckIcon />
-            </button>
-          </div>
+          <UpdateTaskMutation>
+            {([update, res]) => {
+              const response = res.data;
+              useEffect(() => {
+                if (response) {
+                  updateTaskDataFromList({
+                    _id: data._id,
+                    completed: data.completed ? false : true, //works as toggle
+                    completitionTime: data.completed ? null : 0.1, ////works as toggle, if is marked as completed sets 0.1s to avoid bugs
+                    endDate: new Date().toString()
+                  });
+                }
+              }, [response]);
+              return (
+                <div>
+                  <button
+                    onClick={() => {
+                      update({
+                        variables: {
+                          input: {
+                            completed: data.completed ? false : true, //works as toggle
+                            completitionTime: data.completed ? null : 0.1, ////works as toggle, if is marked as completed sets 0.1s to avoid bugs
+                            endDate: new Date().toString()
+                          },
+                          taskID: data._id
+                        }
+                      });
+                    }}
+                    name="check"
+                    className={
+                      data.completed
+                        ? "check-button check-button--checked"
+                        : "check-button"
+                    }
+                    color="secondary"
+                    aria-label="edit"
+                  >
+                    <CheckIcon />
+                  </button>
+                </div>
+              );
+            }}
+          </UpdateTaskMutation>
         )}
         <div className="item__label" onClick={handleSelectItem}>
           {expand && (
@@ -164,13 +192,14 @@ const Item = props => {
         <div className="item__options">
           <UpdateTaskMutation>
             {([update, res]) => {
+              const response = res.data;
               useEffect(() => {
-                if (res.data) {
+                if (response) {
                   updateCurrentTaskData(inputValues);
-                  updateTaskDataFromList(inputValues); //update item from the list
+                  updateTaskDataFromList({ ...inputValues, _id: data._id }); //update item from the list
                   handleEditTask(null); //shrink the item form
                 }
-              }, [res]);
+              }, [response]);
               return (
                 <form
                   onSubmit={evn => {
@@ -194,11 +223,12 @@ const Item = props => {
                   <div className="item__actions">
                     <DeleteTaskMutation>
                       {([deleteTask, res]) => {
+                        const response = res.data;
                         useEffect(() => {
-                          if (res.data) {
+                          if (response) {
                             handleDeleteTask(data._id);
                           }
-                        }, [res]);
+                        }, [response]);
                         return (
                           <Button
                             onClick={() =>

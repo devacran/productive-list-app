@@ -23,10 +23,10 @@ const Timer = props => {
   const parsedRemaindTime = parseTimer(timer.remaindTime);
 
   const calcCompletitionTime = (startDate, endDate) => {
-    const sd = Date.parse(startDate);
-    const ed = Date.parse(endDate);
+    const sd = new Date(startDate);
+    const ed = new Date(endDate);
     const t = ed - sd;
-    return new Date(t).getSeconds();
+    return t / 1000;
   };
 
   useEffect(() => {
@@ -77,8 +77,9 @@ const Timer = props => {
         updateTask({
           variables: {
             input: {
-              startDate: new Date().toString(),
-              completed: false
+              completed: true,
+              endDate,
+              completitionTime
             },
             taskID: currentTask._id
           }
