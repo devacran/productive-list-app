@@ -5,6 +5,11 @@ const listReducer = (state = [], action) => {
         ...state,
         data: { ...state.data, tasks: [...state.data.tasks, action.payload] }
       };
+    case "SET_LIST_DATA":
+      return {
+        ...state,
+        data: action.payload
+      };
     case "SET_LIST_SORT_TYPE":
       return {
         ...state,
@@ -20,7 +25,7 @@ const listReducer = (state = [], action) => {
         ...state,
         data: {
           ...state.data,
-          tasks: state.data.tasks.filter(({ id }) => id !== action.payload)
+          tasks: state.data.tasks.filter(({ _id }) => _id !== action.payload)
         }
       };
     case "UPDATE_TASK_DATA_FROM_LIST":
@@ -29,7 +34,7 @@ const listReducer = (state = [], action) => {
         data: {
           ...state.data,
           tasks: state.data.tasks.map(task => {
-            if (task.id === action.payload.id) {
+            if (task._id === action.payload._id) {
               return Object.assign({}, task, action.payload);
             }
             return task;

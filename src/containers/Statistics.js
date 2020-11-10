@@ -5,7 +5,6 @@ import { parseTimer } from "../utils/timer";
 import Chart from "chart.js";
 const Statistics = props => {
   const { list } = props;
-
   //To generate labels for the chart
   const generateLabels = period => {
     const todayDate = new Date();
@@ -60,6 +59,7 @@ const Statistics = props => {
           }
         });
       let generatedValues = [];
+
       //To create a list for each day of the week and assign the time values
       labels.forEach((label, i) => {
         if (values[label]) {

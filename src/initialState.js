@@ -1,12 +1,14 @@
 import { initialDataGenerator } from "./initialDataGenerator";
 const list = {
+  _id: "5f9da6bc7556b8ad90fcc386",
+  name: "MyList",
   data: {
-    id: "123",
+    _id: "123",
     name: "MyList",
     tasks: initialDataGenerator()
     // tasks: [
     //   {
-    //     id: "123",
+    //     _id: "123",
     //     name: "Mi primer tarea",
     //     duration: 1500000,
     //     description: "",
@@ -18,7 +20,7 @@ const list = {
     //       "Wed Sep 16 2020 00:00:00 GMT-0500 (Central Daylight Time)"
     //   },
     //   {
-    //     id: "Mi ultima Tarea",
+    //     _id: "Mi ultima Tarea",
     //     name: "Tarea menos vieja",
     //     duration: 95000,
     //     description: "hola como estas",
@@ -30,7 +32,7 @@ const list = {
     //       "Sun Oct 25 2020 09:23:45 GMT-0600 (Central Standard Time)"
     //   },
     //   {
-    //     id: "6661",
+    //     _id: "6661",
     //     name: "AAAAA Tarea",
     //     duration: 1200000,
     //     description: "",
@@ -42,7 +44,7 @@ const list = {
     //       "Sat Oct 24 2020 09:23:45 GMT-0600 (Central Standard Time)"
     //   },
     //   {
-    //     id: "6662",
+    //     _id: "6662",
     //     name: "BBBBB Tarea",
     //     duration: 500000,
     //     description: "",
@@ -54,7 +56,7 @@ const list = {
     //       "Sat Oct 24 2020 01:23:45 GMT-0600 (Central Standard Time)"
     //   },
     //   {
-    //     id: "66663",
+    //     _id: "66663",
     //     name: "CCCCCC Tarea",
     //     duration: 3000000,
     //     description: "",
@@ -81,7 +83,7 @@ const timer = {
 const currentTask = {
   edit: false,
   data: {
-    id: "123",
+    _id: "123",
     name: "Tarea 1",
     duration: 34,
     description: "",

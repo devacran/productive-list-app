@@ -8,12 +8,14 @@ import { timer as countDown } from "../utils/timer";
 import { parseTimer } from "../utils/timer";
 import TimerDisplay from "../components/TimerDisplay";
 import TimerButton from "../components/TimerButton";
+
 const Timer = props => {
   const {
     timer,
     currentTask,
     setTimerStatus,
     setTimerRemind,
+    updateTask,
     updateTaskDataFromList,
     updateCurrentTaskData
   } = props;
@@ -21,10 +23,10 @@ const Timer = props => {
   const parsedRemaindTime = parseTimer(timer.remaindTime);
 
   const calcCompletitionTime = (startDate, endDate) => {
-    const sd = Date.parse(startDate);
-    const ed = Date.parse(endDate);
+    const sd = new Date(startDate);
+    const ed = new Date(endDate);
     const t = ed - sd;
-    return new Date(t).getSeconds();
+    return t / 1000;
   };
 
   useEffect(() => {
@@ -42,14 +44,25 @@ const Timer = props => {
         countDown.start();
         if (timer.remaindTime === currentTask.duration) {
           //If this is equal means is start if not is resume
-          updateTaskDataFromList({
-            //Only updates the task if have started for the first time
-            startDate: new Date().toString(),
-            completed: false
-          }); //Sets the current date and completed false to reset if had been started
+          //Only updates the task if have started for the first time
+          //Sets the current date and completed false to reset if had been started
+          updateTask({
+            variables: {
+              input: {
+                startDate: new Date().toString(),
+                completed: false
+              },
+              taskID: currentTask._id
+            }
+          });
           updateCurrentTaskData({
             startDate: new Date().toString(),
             completed: false
+          });
+          updateTaskDataFromList({
+            startDate: new Date().toString(),
+            completed: false,
+            _id: currentTask._id
           });
         }
         break;
@@ -61,8 +74,18 @@ const Timer = props => {
         );
         countDown.stop();
         setTimerRemind(0);
+        updateTask({
+          variables: {
+            input: {
+              completed: true,
+              endDate,
+              completitionTime
+            },
+            taskID: currentTask._id
+          }
+        });
         updateTaskDataFromList({
-          id: currentTask.id,
+          _id: currentTask._id,
           completed: true,
           endDate,
           completitionTime

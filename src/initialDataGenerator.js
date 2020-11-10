@@ -8,7 +8,7 @@ const randomNumberGenerator = number => {
 
 export const initialDataGenerator = () => {
   let taskList = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 5; i++) {
     const task = {};
 
     let creationDate = new Date();
@@ -20,7 +20,7 @@ export const initialDataGenerator = () => {
     let endDate = new Date(startDate.toString());
     endDate.setSeconds(startDate.getSeconds() + randomNumberGenerator(7200));
 
-    task.id = Math.random();
+    task._id = Math.random();
     task.name = `Mi tarea ${i}`;
     task.duration = randomNumberGenerator(7200);
     task.description = `Mi descripcion ${i}`;
