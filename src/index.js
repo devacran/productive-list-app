@@ -9,7 +9,7 @@ import reducer from "./reducer";
 import styles from "./styles/main.scss";
 
 const client = new ApolloClient({
-  uri: "http://localhost:6664/api",
+  uri: "https://productive-list-server.vercel.app/api",
   cache: new InMemoryCache()
 });
 
