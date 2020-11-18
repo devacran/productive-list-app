@@ -1,7 +1,11 @@
-import React from "react";
+import * as React from "react";
 import { parseTimer } from "../utils/timer";
-const ItemTimeDisplay = props => {
-  const { total, hours, minutes, seconds } = parseTimer(props.time);
+
+type props = {
+  time: object;
+};
+const ItemTimeDisplay = (props: props) => {
+  const { hours, minutes, seconds } = parseTimer(props.time);
   return (
     <div>
       <span>

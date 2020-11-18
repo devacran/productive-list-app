@@ -5,7 +5,6 @@ import { setTaskTimer as _setTaskTimerData } from "../actions";
 import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import ItemOptions from "../components/ItemOptions";
 import ItemTimeSelector from "../components/ItemTimeSelector";
 import ItemDescription from "../components/ItemDescription";
 import { CreateTaskMutation } from "./CreateTaskMutation";

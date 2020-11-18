@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
-const ListFilterMenu = props => {
+type props = {
+  handleListFilters: (filters: object) => void;
+};
+const ListFilterMenu = (props: props) => {
   const [filters, setFilters] = useState({ duration: null, completed: null });
 
-  const handleChange = evn => {
+  const handleChange = (evn: React.ChangeEvent<HTMLSelectElement>) => {
     const selectorValue = evn.target.value;
 
     selectorValue !== "none"
       ? setFilters({ ...filters, duration: selectorValue })
       : setFilters({ ...filters, duration: null });
   };
-  const handleToggle = evn => {
+  const handleToggle = () => {
     setFilters({ ...filters, completed: filters.completed ? null : true });
   };
   useEffect(() => {

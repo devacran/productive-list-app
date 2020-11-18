@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
+
 import { TextField } from "@material-ui/core";
-const ItemDescription = ({ description, setDescription }) => {
+
+type props = {
+  description: String;
+  setDescription: (description: String) => void;
+};
+
+const ItemDescription = ({ description, setDescription }: props) => {
   const [expand, setExpand] = useState(false);
   const handleClick = () => {
     setExpand(true);

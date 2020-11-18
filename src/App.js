@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import Statistics from "./containers/Statistics";
 import { Container } from "@material-ui/core";
 import { Modal as StatsModal } from "@material-ui/core";
-import Button from "./prueba.tsx";
 const App = () => {
   const [openStatsModal, setOpenStatsModal] = useState(false);
   const handleCloseStatsModal = () => {
@@ -17,7 +16,6 @@ const App = () => {
     <div className="app-container">
       <Header handleOpenStatsModal={handleOpenStatsModal}></Header>
       <Home />
-      <Button text={"hola"} />
       <StatsModal
         className="stats-modal"
         open={openStatsModal}

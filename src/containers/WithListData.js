@@ -37,7 +37,7 @@ const WithListData = props => {
   return children({ data: currentListTasks, loading, error });
 };
 const mapStateToProps = state => ({
-  currentList: state.list._id,
+  currentList: state.list.data._id,
   currentListTasks: state.list.data.tasks
 });
 const mapDispatchToProps = {

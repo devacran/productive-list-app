@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import { useState, useEffect } from "react";
 
 import {
   Button,
@@ -8,10 +9,16 @@ import {
   MenuItem
 } from "@material-ui/core";
 import ItemTimeDisplay from "./ItemTimeDisplay";
-import { parseTimer } from "../utils/timer";
-const ItemTimeSelector = props => {
+
+type props = {
+  handleClick: (duration: { duration: number }) => void;
+  duration: String;
+};
+const ItemTimeSelector = (props: props) => {
   const { handleClick, duration } = props;
-  const [custom, setCustom] = useState(false);
+  const [custom, setCustom] = useState<{ min: number; sec: number } | null>(
+    null
+  );
   const generateSecRange = () => {
     let n = 0;
     let s = [];
@@ -72,7 +79,9 @@ const ItemTimeSelector = props => {
               labelId="custom-task-duration-mins"
               id="custom-task-duration-mins"
               value={custom.min}
-              onChange={evn => setCustom({ ...custom, min: evn.target.value })}
+              onChange={evn =>
+                setCustom({ ...custom, min: evn.target.value as number })
+              }
             >
               {minRange.map((min, k) => (
                 <MenuItem key={k} value={min}>
@@ -89,7 +98,9 @@ const ItemTimeSelector = props => {
               labelId="custom-task-duration-sec"
               id="custom-task-duration-sec"
               value={custom.sec}
-              onChange={evn => setCustom({ ...custom, sec: evn.target.value })}
+              onChange={evn =>
+                setCustom({ ...custom, sec: evn.target.value as number })
+              }
             >
               {secRange.map((sec, k) => (
                 <MenuItem key={k} value={sec}>
