@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { updateCurrentTaskData as _updateCurrentTaskData } from "../actions";
 import { updateTaskDataFromList as _updateTaskDataFromList } from "../actions";
 import { setTaskTimer } from "../actions";
-import { parseTimer } from "../utils/timer";
 import { Button } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { TextField } from "@material-ui/core";
 import ItemTimeSelector from "../components/ItemTimeSelector";
 import ItemDescription from "../components/ItemDescription";
-import TimerDisplay from "../components/TimerDisplay";
 import ItemTimeDisplay from "../components/ItemTimeDisplay";
 import { UpdateTaskMutation } from "./UpdateTaskMutation";
-import HourglassFullIcon from "@material-ui/icons/HourglassFull";
 import WatchLaterIcon from "@material-ui/icons/WatchLater";
 import { DeleteTaskMutation } from "./DeleteTaskMutation";
-const Item = props => {
+import { TimerType, TaskType, TimerStatusTypes } from "../types";
+
+type ItemProps = {
+  timer: TimerType;
+  setCurrentTask: (task: TaskType) => void;
+  setTaskTimerData: (timer: TimerType) => void;
+  handleDeleteTask: (taskID: string) => void;
+  handleEditTask: (taskID: string | boolean) => void;
+  updateCurrentTaskData: (taskData: {} & TaskType) => void;
+  updateTaskDataFromList: (taskData: {} & TaskType) => void;
+  handleCancel: () => void;
+  expand: boolean;
+  active: boolean;
+  data: TaskType;
+};
+
+const Item: FC<ItemProps> = (props: ItemProps) => {
   const {
     timer,
     setCurrentTask,
@@ -32,7 +44,7 @@ const Item = props => {
     data
   } = props;
 
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState<TaskType>({});
 
   const handleSelectItem = () => {
     const { timerStatus } = timer;
@@ -41,11 +53,12 @@ const Item = props => {
       setTaskTimerData({
         duration: props.data.duration,
         remaindTime: props.data.duration,
-        timerStatus: "idle"
+        timerStatus: TimerStatusTypes.IDLE
       });
     }
   };
-  const handleClick = evn => {
+
+  const handleClick = (evn: React.MouseEvent<HTMLButtonElement>) => {
     switch (evn.currentTarget.name) {
       case "edit":
         const _inputValues = { ...data };
@@ -71,26 +84,19 @@ const Item = props => {
     }
   };
 
-  const handleSubmit = evn => {
-    console.log("deprecated");
-    evn.preventDefault();
-    //try UPDATE to API then updates the app state
-    //axios('apiurl', {data: inputValues})
-    updateCurrentTaskData(inputValues); //if item is currentTask updates
-    updateTaskDataFromList(inputValues); //update item from the list
-    handleEditTask(null); //shrink the item
+  const handleChange = (evn: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = evn.target as HTMLInputElement;
+    setInputValues({ ...inputValues, [name]: value });
   };
-  const handleChange = evn => {
-    const fieldName = evn.target.name;
-    const fieldValue = evn.target.value;
-    setInputValues({ ...inputValues, [fieldName]: fieldValue });
-  };
+
   const handleTaskDuration = ({ duration }) => {
     setInputValues({ ...inputValues, duration });
   };
-  const handleDescription = description => {
+
+  const handleDescription = (description: string) => {
     setInputValues({ ...inputValues, description });
   };
+
   return (
     <div className={active ? "item item--active" : "item"}>
       <div className={!expand ? "item__main" : "item__main item__main--expand"}>

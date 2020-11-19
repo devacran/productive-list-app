@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { parseTimer } from "../utils/timer";
 
 type ItemTimeDisplayProps = {
-  time: object;
+  time: number;
 };
 
 const ItemTimeDisplay: FC<ItemTimeDisplayProps> = (

@@ -2,11 +2,11 @@ import React, { FC, useState } from "react";
 import ListFilterMenu from "./ListFilterMenu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ListSortMenu from "./ListSortMenu";
-import { TaskType, SortListTypes } from "../types";
+import { TaskType, SortListTypes, ListFilterTypes } from "../types";
 
 type ListItemHeaderProps = {
-  handleListSortType: () => void;
-  handleListFilters: () => void;
+  handleListSortType: (type: SortListTypes) => void;
+  handleListFilters: (filters: ListFilterTypes) => void;
   data: TaskType;
   listName: String;
   sortType: SortListTypes;

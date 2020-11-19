@@ -1,17 +1,18 @@
 export type TaskType = {
-  _id: String;
-  name: String;
-  duration: number;
-  description: String;
-  completed: boolean;
-  completitionTime: number;
-  startDate: String;
-  endDate: String;
-  creationDate: String;
+  _id?: string;
+  __typename?: string;
+  name?: string;
+  duration?: number;
+  description?: string;
+  completed?: boolean;
+  completitionTime?: number;
+  startDate?: string;
+  endDate?: string;
+  creationDate?: string;
 };
 export type ListType = {
-  _id: String;
-  name: String;
+  _id: string;
+  name: string;
   tasks: TaskType[];
 };
 
@@ -30,3 +31,9 @@ export enum TimerStatusTypes {
   CONTINUE = "continue",
   IN_PROGRESS = "inProgress"
 }
+
+export type TimerType = {
+  duration: number;
+  remaindTime: number;
+  timerStatus: TimerStatusTypes;
+};

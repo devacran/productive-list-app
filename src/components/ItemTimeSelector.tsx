@@ -10,7 +10,7 @@ import ItemTimeDisplay from "./ItemTimeDisplay";
 
 type ItemTimeSelectorProps = {
   handleClick: (duration: { duration: number }) => void;
-  duration: String;
+  duration: number;
 };
 
 const ItemTimeSelector: FC<ItemTimeSelectorProps> = (
