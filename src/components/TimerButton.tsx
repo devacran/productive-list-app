@@ -1,19 +1,23 @@
-import React from "react";
-
-const TimerButton = ({ timerStatus, setTimerStatus }) => {
+import * as React from "react";
+import { TimerStatusTypes } from "../types";
+type props = {
+  timerStatus: TimerStatusTypes;
+  setTimerStatus: (status: TimerStatusTypes) => void;
+};
+const TimerButton = ({ timerStatus, setTimerStatus }: props) => {
   const handleTimerButton = evn => {
     switch (evn.target.value) {
       case "start":
-        setTimerStatus("inProgress");
+        setTimerStatus(TimerStatusTypes.inProgress);
         break;
       case "pause":
-        setTimerStatus("pause");
+        setTimerStatus(TimerStatusTypes.pause);
         break;
       case "continue":
-        setTimerStatus("inProgress");
+        setTimerStatus(TimerStatusTypes.continue);
         break;
       case "stop":
-        setTimerStatus("stop");
+        setTimerStatus(TimerStatusTypes.stop);
         break;
     }
   };

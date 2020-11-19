@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-const ListSortMenu = props => {
+import { SortListTypes } from "../types";
+type props = {
+  sortType: SortListTypes;
+  setSortType: (type: SortListTypes) => void;
+};
+const ListSortMenu = (props: props) => {
   const { sortType, setSortType } = props;
-  const handleChange = evn => {
-    setSortType(evn.target.value);
+  const handleChange = (evn: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortType(evn.target.value as SortListTypes);
   };
   return (
     <div className="list-sort-menu">

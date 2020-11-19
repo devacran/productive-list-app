@@ -3,14 +3,14 @@ import { useState } from "react";
 import ListFilterMenu from "./ListFilterMenu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ListSortMenu from "./ListSortMenu";
-import { TaskType } from "../types";
+import { TaskType, SortListTypes } from "../types";
 
 type props = {
   handleListSortType: () => void;
   handleListFilters: () => void;
   data: TaskType;
   listName: String;
-  sortType: () => void;
+  sortType: SortListTypes;
 };
 const ListItemHeader = (props: props) => {
   const {
