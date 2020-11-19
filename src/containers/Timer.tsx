@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { connect } from "react-redux";
 import { setTimerStatus as _setTimerStatus } from "../actions";
 import { setTimerRemind as _setTimerRemind } from "../actions";
@@ -8,8 +8,18 @@ import { timer as countDown } from "../utils/timer";
 import { parseTimer } from "../utils/timer";
 import TimerDisplay from "../components/TimerDisplay";
 import TimerButton from "../components/TimerButton";
+import { TimerType, TaskType, TimerStatusTypes } from "../types";
+type TimerProps = {
+  timer: TimerType;
+  currentTask: TaskType;
+  setTimerStatus: (status: TimerStatusTypes) => void;
+  setTimerRemind: (time: number) => void;
+  updateTask: (query: any) => void;
+  updateTaskDataFromList: (data: {} & TaskType) => void;
+  updateCurrentTaskData: (data: {} & TaskType) => void;
+};
 
-const Timer = props => {
+const Timer: FC<TimerProps> = (props: TimerProps) => {
   const {
     timer,
     currentTask,
@@ -22,10 +32,10 @@ const Timer = props => {
   const { timerStatus } = timer;
   const parsedRemaindTime = parseTimer(timer.remaindTime);
 
-  const calcCompletitionTime = (startDate, endDate) => {
+  const calcCompletitionTime = (startDate: string, endDate: string) => {
     const sd = new Date(startDate);
     const ed = new Date(endDate);
-    const t = ed - sd;
+    const t = ed.getTime() - sd.getTime();
     return t / 1000;
   };
 
@@ -114,6 +124,7 @@ const Timer = props => {
     </div>
   );
 };
+
 const mapDispatchToProps = {
   setTimerStatus: _setTimerStatus,
   setTimerRemind: _setTimerRemind,

@@ -1,17 +1,22 @@
-import React, { useRef, useEffect } from "react";
+import React, { FC, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { filterList } from "../utils/filterList";
 import { parseTimer } from "../utils/timer";
 import Chart from "chart.js";
-const Statistics = props => {
+import { TaskType } from "../types";
+
+type StatisticsProps = {
+  list: TaskType[];
+};
+const Statistics: FC<StatisticsProps> = props => {
   const { list } = props;
   //To generate labels for the chart
-  const generateLabels = period => {
+  const generateLabels = (period: string) => {
     const todayDate = new Date();
     const generateWeek = () => {
       let labels = [];
       for (let i = 0; i < 7; i++) {
-        let d;
+        let d: number;
         if (i === 0) {
           //The first loop uses the current date
           d = todayDate.setDate(todayDate.getDate());
@@ -30,38 +35,41 @@ const Statistics = props => {
     switch (period) {
       case "week":
         return generateWeek();
-        break;
       default:
         return [];
     }
   };
   //Function to generate data for the chart depending to the labels
-  const generateValues = (options = {}) => {
+  const generateValues = (options: {
+    period: string;
+    list: TaskType[];
+    labels: string[];
+    group: string;
+  }) => {
     const { period, list, labels } = options;
     const generateWeek = () => {
       let values = [];
-      const v = list
-        .map(task => {
-          //creates a list with completitionTime and task end date
-          const v = { time: task.completitionTime, date: task.endDate };
-          return v;
-        })
-        .forEach(task => {
-          //then group the elements by date
-          const taskDate = new Date(task.date).toLocaleDateString("es-MX", {
-            day: "numeric",
-            month: "short"
-          });
-          if (values[taskDate]) {
-            values[taskDate] += task.time;
-          } else {
-            values[taskDate] = task.time;
-          }
+      const v = list.map((task: {} & TaskType) => {
+        //creates a list with completitionTime and task end date
+        const v = { time: task.completitionTime, date: task.endDate };
+        return v;
+      });
+      v.forEach((task: { time: number; date: string }) => {
+        //then group the elements by date
+        const taskDate = new Date(task.date).toLocaleDateString("es-MX", {
+          day: "numeric",
+          month: "short"
         });
+        if (values[taskDate]) {
+          values[taskDate] += task.time;
+        } else {
+          values[taskDate] = task.time;
+        }
+      });
       let generatedValues = [];
 
       //To create a list for each day of the week and assign the time values
-      labels.forEach((label, i) => {
+      labels.forEach((label: string, i: number) => {
         if (values[label]) {
           //if a label matches with values index asign the value
           generatedValues[i] = Math.floor(values[label] / 60); //to set value minutes
@@ -74,7 +82,6 @@ const Statistics = props => {
     switch (period) {
       case "week":
         return generateWeek();
-        break;
       default:
         return [];
     }
@@ -150,10 +157,8 @@ const Statistics = props => {
     }
   };
   useEffect(() => {
-    const filteredList = filterList.byPeriod({ list, period: "week" });
     const ctx = graph.current.getContext("2d");
-
-    const myLineChart = new Chart(ctx, config);
+    new Chart(ctx, config);
   }, []);
   return (
     <div>
