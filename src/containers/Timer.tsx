@@ -14,7 +14,7 @@ type TimerProps = {
   currentTask: TaskType;
   setTimerStatus: (status: TimerStatusTypes) => void;
   setTimerRemind: (time: number) => void;
-  updateTask: (query: any) => void;
+  updateTask: (query: object) => void;
   updateTaskDataFromList: (data: {} & TaskType) => void;
   updateCurrentTaskData: (data: {} & TaskType) => void;
 };

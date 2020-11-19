@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 const DELETE_TASK = gql`
   mutation deleteTask($taskID: ID!) {
