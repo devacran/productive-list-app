@@ -1,6 +1,4 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-
+import React, { FC, useState, useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -10,15 +8,20 @@ import {
 } from "@material-ui/core";
 import ItemTimeDisplay from "./ItemTimeDisplay";
 
-type props = {
+type ItemTimeSelectorProps = {
   handleClick: (duration: { duration: number }) => void;
   duration: String;
 };
-const ItemTimeSelector = (props: props) => {
+
+const ItemTimeSelector: FC<ItemTimeSelectorProps> = (
+  props: ItemTimeSelectorProps
+) => {
   const { handleClick, duration } = props;
+
   const [custom, setCustom] = useState<{ min: number; sec: number } | null>(
     null
   );
+
   const generateSecRange = () => {
     let n = 0;
     let s = [];
@@ -28,6 +31,7 @@ const ItemTimeSelector = (props: props) => {
     }
     return s;
   };
+
   const generateMinRange = () => {
     let n = 0;
     let s = [];
@@ -49,6 +53,7 @@ const ItemTimeSelector = (props: props) => {
       handleClick({ duration: total });
     }
   }, [custom]);
+
   return (
     <div className="item-time-selector">
       <div>

@@ -1,23 +1,28 @@
-import * as React from "react";
+import React, { FC } from "react";
 import { TimerStatusTypes } from "../types";
-type props = {
+
+type TimerButtonProps = {
   timerStatus: TimerStatusTypes;
   setTimerStatus: (status: TimerStatusTypes) => void;
 };
-const TimerButton = ({ timerStatus, setTimerStatus }: props) => {
+
+const TimerButton: FC<TimerButtonProps> = ({
+  timerStatus,
+  setTimerStatus
+}: TimerButtonProps) => {
   const handleTimerButton = evn => {
     switch (evn.target.value) {
       case "start":
-        setTimerStatus(TimerStatusTypes.inProgress);
+        setTimerStatus(TimerStatusTypes.IN_PROGRESS);
         break;
       case "pause":
-        setTimerStatus(TimerStatusTypes.pause);
+        setTimerStatus(TimerStatusTypes.PAUSE);
         break;
       case "continue":
-        setTimerStatus(TimerStatusTypes.continue);
+        setTimerStatus(TimerStatusTypes.CONTINUE);
         break;
       case "stop":
-        setTimerStatus(TimerStatusTypes.stop);
+        setTimerStatus(TimerStatusTypes.STOP);
         break;
     }
   };
@@ -29,6 +34,7 @@ const TimerButton = ({ timerStatus, setTimerStatus }: props) => {
       </button>
     </div>
   );
+
   const inProgress = (
     <div className="timer-button">
       <button onClick={handleTimerButton} value="pause">
@@ -36,6 +42,7 @@ const TimerButton = ({ timerStatus, setTimerStatus }: props) => {
       </button>
     </div>
   );
+
   const pause = (
     <div className="timer-button">
       <button onClick={handleTimerButton} value="continue">
@@ -46,6 +53,7 @@ const TimerButton = ({ timerStatus, setTimerStatus }: props) => {
       </button>
     </div>
   );
+
   //returns the button depending the timer state value
   return (
     <>

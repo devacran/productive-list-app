@@ -1,14 +1,16 @@
-import * as React from "react";
+import React, { FC } from "react";
 
-type props = {
+type TimerDisplayProps = {
   total: number;
   hours: number;
   minutes: number;
   seconds: number;
   style: "string";
 };
-const TimerDisplay = (props: props) => {
+
+const TimerDisplay: FC<TimerDisplayProps> = (props: TimerDisplayProps) => {
   const { hours, minutes, seconds, style } = props;
+
   return (
     <div className={style}>
       <span>

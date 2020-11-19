@@ -3,7 +3,7 @@ export type TaskType = {
   name: String;
   duration: number;
   description: String;
-  completed: Boolean;
+  completed: boolean;
   completitionTime: number;
   startDate: String;
   endDate: String;
@@ -15,22 +15,18 @@ export type ListType = {
   tasks: TaskType[];
 };
 
-type ListFilterTypes = {
-  period: Boolean & null;
-  duration: Boolean & null;
-  completed: Boolean & null;
+export type ListFilterTypes = {
+  // period: boolean & null;
+  duration: string | null;
+  completed: boolean | null;
 };
 
-enum SortList {
-  date = "date",
-  duration = "duration"
-}
 export type SortListTypes = "date" | "duration";
 
 export enum TimerStatusTypes {
-  idle = "idle",
-  stop = "stop",
-  pause = "pause",
-  continue = "continue",
-  inProgress = "inProgress"
+  IDLE = "idle",
+  STOP = "stop",
+  PAUSE = "pause",
+  CONTINUE = "continue",
+  IN_PROGRESS = "inProgress"
 }

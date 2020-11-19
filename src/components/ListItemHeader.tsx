@@ -1,18 +1,20 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import ListFilterMenu from "./ListFilterMenu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ListSortMenu from "./ListSortMenu";
 import { TaskType, SortListTypes } from "../types";
 
-type props = {
+type ListItemHeaderProps = {
   handleListSortType: () => void;
   handleListFilters: () => void;
   data: TaskType;
   listName: String;
   sortType: SortListTypes;
 };
-const ListItemHeader = (props: props) => {
+
+const ListItemHeader: FC<ListItemHeaderProps> = (
+  props: ListItemHeaderProps
+) => {
   const {
     handleListSortType,
     handleListFilters,
@@ -20,10 +22,13 @@ const ListItemHeader = (props: props) => {
     listName,
     sortType
   } = props;
+
   const [expand, setExpand] = useState(false);
+
   const handleClick = () => {
     expand ? setExpand(false) : setExpand(true);
   };
+
   return (
     <div className="list-item-header">
       <div className="list-item-header__current">

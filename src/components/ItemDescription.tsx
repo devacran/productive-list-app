@@ -1,21 +1,25 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-
+import React, { FC, useState, useEffect } from "react";
 import { TextField } from "@material-ui/core";
 
-type props = {
+type ItemDescriptionProps = {
   description: String;
   setDescription: (description: String) => void;
 };
 
-const ItemDescription = ({ description, setDescription }: props) => {
+const ItemDescription: FC<ItemDescriptionProps> = ({
+  description,
+  setDescription
+}: ItemDescriptionProps) => {
   const [expand, setExpand] = useState(false);
+
   const handleClick = () => {
     setExpand(true);
   };
+
   useEffect(() => {
     description !== "" && setExpand(true);
   }, [description]);
+
   return (
     <div className="item__description">
       {!expand && <button onClick={handleClick}>+Añadir una nota</button>}
