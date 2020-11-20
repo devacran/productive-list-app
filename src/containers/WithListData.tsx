@@ -26,29 +26,40 @@ const GET_LIST = gql`
 `;
 
 type WithListDataProps = {
-  currentList: ListType;
+  currentList: string;
   currentListTasks: TaskType[];
   setListData: (data: ListType) => void;
   children: (props) => FC;
 };
+interface GetList {
+  getList: ListType;
+}
+interface GetListVars {
+  listID: string;
+}
 const WithListData = (props: WithListDataProps) => {
   const { children, currentList, setListData, currentListTasks } = props;
-  const { data = {}, loading, error } = useQuery(GET_LIST, {
+
+  const { data, loading, error } = useQuery<GetList, GetListVars>(GET_LIST, {
     variables: { listID: currentList }
   });
+
   React.useEffect(() => {
-    if (data.getList) {
+    if (data?.getList) {
       setListData(data.getList);
     }
   }, [data]);
 
   return children({ data: currentListTasks, loading, error });
 };
+
 const mapStateToProps = state => ({
   currentList: state.list.data._id,
   currentListTasks: state.list.data.tasks
 });
+
 const mapDispatchToProps = {
   setListData: _setListData
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(WithListData);

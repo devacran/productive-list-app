@@ -11,7 +11,19 @@ const CREATE_TASK = gql`
   }
 `;
 
+interface NewTaskVars {
+  input: {
+    name: string;
+    duration: number;
+    description: string;
+  };
+  listID: string;
+}
+
 export const CreateTaskMutation = ({ children }) => {
-  const [create, { data, loading, error }] = useMutation(CREATE_TASK);
+  const [create, { data, loading, error }] = useMutation<
+    { create: string },
+    NewTaskVars
+  >(CREATE_TASK);
   return children([create, { data, loading, error }]);
 };

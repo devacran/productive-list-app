@@ -9,6 +9,7 @@ import { parseTimer } from "../utils/timer";
 import TimerDisplay from "../components/TimerDisplay";
 import TimerButton from "../components/TimerButton";
 import { TimerType, TaskType, TimerStatusTypes } from "../types";
+
 type TimerProps = {
   timer: TimerType;
   currentTask: TaskType;
@@ -29,7 +30,9 @@ const Timer: FC<TimerProps> = (props: TimerProps) => {
     updateTaskDataFromList,
     updateCurrentTaskData
   } = props;
+
   const { timerStatus } = timer;
+
   const parsedRemaindTime = parseTimer(timer.remaindTime);
 
   const calcCompletitionTime = (startDate: string, endDate: string) => {
@@ -131,6 +134,7 @@ const mapDispatchToProps = {
   updateTaskDataFromList: _updateTaskDataFromList,
   updateCurrentTaskData: _updateCurrentTaskData
 };
+
 const mapStateToProps = state => ({
   currentTask: state.currentTask.data || {},
   timer: state.timer
