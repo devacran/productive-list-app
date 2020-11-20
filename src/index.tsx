@@ -6,14 +6,16 @@ import { Provider } from "react-redux";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { createStore, compose } from "redux";
 import reducer from "./reducer";
-import styles from "./styles/main.scss";
+require("./styles/main.scss");
 
 const client = new ApolloClient({
   uri: "https://productive-list-server.vercel.app/api",
   cache: new InMemoryCache()
 });
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //To debugg state with redux chrome extension
+const composeEnhancers =
+  (window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] as typeof compose) || compose; //To debugg state with redux chrome extension
+
 import initialState from "./initialState";
 const store = createStore(reducer, initialState, composeEnhancers());
 

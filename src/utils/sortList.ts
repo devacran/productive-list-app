@@ -1,9 +1,10 @@
-//sort list by options {type: order:}
+import { TaskType, SortListTypes } from "../types";
+
 class SortList {
   constructor() {}
-  by(list, options) {
-    const { type, order } = options;
-    let l;
+  by(list: TaskType[], options: { type: SortListTypes }): TaskType[] {
+    const { type } = options;
+    let l: TaskType[];
     switch (type) {
       case "date":
         l = this.sortListByCreationDate(list);
@@ -12,19 +13,20 @@ class SortList {
         l = this.sortListByDuration(list);
         return l;
       default:
+        return list;
     }
   }
 
-  sortListByStartDate(list) {
+  sortListByStartDate(list: TaskType[]) {
     const _list = [...list];
     _list.sort((a, b) => {
       const da = new Date(a.startDate);
       const db = new Date(b.startDate);
-      return db - da;
+      return db.getTime() - da.getTime();
     });
     return _list;
   }
-  sortListByDuration(list) {
+  sortListByDuration(list: TaskType[]) {
     const _list = [...list];
     _list.sort((a, b) => {
       //If task is completed takes the completitionTime if not takes duration
@@ -32,25 +34,16 @@ class SortList {
       const tb = b.completitionTime ? b.completitionTime : b.duration;
       const da = new Date(ta);
       const db = new Date(tb);
-      return db - da;
+      return db.getTime() - da.getTime();
     });
     return _list;
   }
-  sortListByCreationDate(list) {
+  sortListByCreationDate(list: TaskType[]): TaskType[] {
     const _list = [...list];
     _list.sort((a, b) => {
       const da = new Date(a.creationDate);
       const db = new Date(b.creationDate);
-      return db - da;
-    });
-    return _list;
-  }
-  sortListByName(list) {
-    const _list = [...list];
-    _list.sort((a, b) => {
-      const na = a.name.toUpperCase();
-      const nb = b.name.toUpperCase();
-      return nb - na;
+      return db.getTime() - da.getTime();
     });
     return _list;
   }

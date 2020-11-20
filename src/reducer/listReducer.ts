@@ -1,4 +1,8 @@
-import { ListState, ListActionTypes } from "../types";
+import {
+  ListState,
+  ListActionTypes,
+  UpdateTaskDataFromListType
+} from "../types";
 
 const initialState: ListState = {
   edit: false,
@@ -47,7 +51,9 @@ const listReducer = (state = initialState, action: ListActionTypes) => {
         data: {
           ...state.data,
           tasks: state.data.tasks.map(task => {
-            if (task._id === action.payload._id) {
+            if (
+              task._id === (action as UpdateTaskDataFromListType).payload._id
+            ) {
               return Object.assign({}, task, action.payload);
             }
             return task;

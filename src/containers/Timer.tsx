@@ -43,15 +43,12 @@ const Timer: FC<TimerProps> = (props: TimerProps) => {
   };
 
   useEffect(() => {
-    countDown.config(
-      {
-        seconds: timer.remaindTime,
-        setRemindTimeState: setTimerRemind,
-        setTimerState: setTimerStatus,
-        timerState: timer.timerStatus
-      },
-      []
-    );
+    countDown.config({
+      seconds: timer.remaindTime,
+      setRemindTimeState: setTimerRemind,
+      setTimerState: setTimerStatus,
+      timerState: timer.timerStatus
+    });
     switch (timerStatus) {
       case "inProgress":
         countDown.start();

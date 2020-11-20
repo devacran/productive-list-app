@@ -1,7 +1,5 @@
 import React, { FC, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import { filterList } from "../utils/filterList";
-import { parseTimer } from "../utils/timer";
 import Chart from "chart.js";
 import { TaskType } from "../types";
 

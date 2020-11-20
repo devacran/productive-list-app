@@ -1,10 +1,25 @@
+import { TimerStatusTypes } from "../types";
+
+type setRemindTimeState = (remindTime: number) => void;
+type setTimerState = (state: string) => void;
 class Timer {
+  remaindTime: number;
+  timerSeconds: number;
+  setRemindTimeState: setRemindTimeState;
+  setTimerState: setTimerState;
+  timerState: TimerStatusTypes;
+  currentTimer: ReturnType<typeof setTimeout>;
   constructor() {
     this.remaindTime = 0;
   }
   //setTimerState: is used to update the remaind time in app state
   //timerSeconds: is the total time to count down
-  config(config) {
+  config(config: {
+    seconds: number;
+    setRemindTimeState: setRemindTimeState;
+    setTimerState: setTimerState;
+    timerState: TimerStatusTypes;
+  }) {
     this.timerSeconds = config.seconds || 0;
     this.setRemindTimeState = config.setRemindTimeState || function() {};
     this.setTimerState = config.setTimerState || function() {};
@@ -30,7 +45,7 @@ class Timer {
 }
 export const timer = new Timer(); //To have a singleton and returns a unique instance
 
-export function parseTimer(sec) {
+export function parseTimer(sec: number) {
   const total = sec;
   const seconds = Math.floor(sec % 60);
   const minutes = Math.floor((total / 60) % 60);

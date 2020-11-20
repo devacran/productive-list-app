@@ -60,51 +60,51 @@ export interface TimerState extends TimerType {}
 //-----Action Types-------//
 interface SetCurrentTaskType {
   type: string;
-  payload;
+  payload: TaskType;
 }
 
 interface UpdateCurrentTaskDataType {
   type: string;
-  payload;
+  payload: {} & TaskType;
 }
 
-interface UpdateTaskDataFromListType {
+export interface UpdateTaskDataFromListType {
   type: string;
-  payload;
+  payload: {} & TaskType;
 }
 
 interface SetNewTaskToListType {
   type: string;
-  payload;
+  payload: TaskType;
 }
 interface SetListDataType {
   type: string;
-  payload;
+  payload: ListType;
 }
 interface RemoveTaskFromListType {
   type: string;
-  payload;
+  payload: string;
 }
 interface SetListSortType {
   type: string;
-  payload;
+  payload: SortListTypes;
 }
 interface SetListFiltersType {
   type: string;
-  payload;
+  payload: ListFilterTypes;
 }
 
 interface SetTaskTimerType {
   type: string;
-  payload;
+  payload: TimerType;
 }
 interface SetTimerRemindType {
   type: string;
-  payload;
+  payload: number;
 }
 interface SetTimerStatusType {
   type: string;
-  payload;
+  payload: TimerStatusTypes;
 }
 
 export type CurrentTaskActionTypes =

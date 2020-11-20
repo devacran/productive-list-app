@@ -1,3 +1,5 @@
+import { TaskType } from "../types";
+
 class FilterList {
   constructor() {}
   getLastWeekDate() {
@@ -5,15 +7,15 @@ class FilterList {
     d.setDate(d.getDate() - 7); //sets this day minus 7 days
     return d; //returns date 7 days ago
   }
-  byCompleted(list = []) {
+  byCompleted(list: TaskType[] = []): TaskType[] {
     const _list = [...list]; //to avoid mutate the original list
     const filteredList = _list.filter(({ completed }) => completed);
     return filteredList;
   }
-  byDuration(options = {}) {
+  byDuration(options: { duration: string; list: TaskType[] }): TaskType[] {
     const { duration, list } = options;
     const _list = [...list]; //to avoid mutate the original list
-    let filteredList;
+    let filteredList: TaskType[];
     //To filter the list this function takes completitionTime if task have been finished or duration if not
     switch (duration) {
       case "short":
@@ -44,11 +46,11 @@ class FilterList {
     }
     return filteredList;
   }
-  byPeriod(options = {}) {
+  byPeriod(options: { period: string; list: TaskType[] }): TaskType[] {
     const { period, list } = options;
     const _list = [...list]; //to avoid mutate the original list
     const lastWeekDate = this.getLastWeekDate();
-    let filteredList;
+    let filteredList: TaskType[];
     switch (period) {
       case "week":
         filteredList = _list.filter(
@@ -66,7 +68,10 @@ class FilterList {
     return filteredList;
   }
 
-  byOptions(list, options) {
+  byOptions(
+    list: TaskType[],
+    options: { duration?: string; period?: string; completed?: boolean }
+  ): TaskType[] {
     let _list = [...list];
     if (options.duration) {
       _list = this.byDuration({ duration: options.duration, list });

@@ -1,4 +1,5 @@
-const randomNumberGenerator = number => {
+import { TaskType } from "./types";
+const randomNumberGenerator = (number: number) => {
   if (number === 1) {
     return Math.floor(Math.random() * 2);
   }
@@ -9,7 +10,7 @@ const randomNumberGenerator = number => {
 export const initialDataGenerator = () => {
   let taskList = [];
   for (let i = 0; i < 5; i++) {
-    const task = {};
+    const task: TaskType = {};
 
     let creationDate = new Date();
     creationDate.setDate(creationDate.getDate() - randomNumberGenerator(7));
@@ -20,7 +21,7 @@ export const initialDataGenerator = () => {
     let endDate = new Date(startDate.toString());
     endDate.setSeconds(startDate.getSeconds() + randomNumberGenerator(7200));
 
-    task._id = Math.random();
+    task._id = Math.random().toString();
     task.name = `Mi tarea ${i}`;
     task.duration = randomNumberGenerator(7200);
     task.description = `Mi descripcion ${i}`;
