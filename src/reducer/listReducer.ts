@@ -1,4 +1,17 @@
-const listReducer = (state = [], action) => {
+import { ListState, ListActionTypes } from "../types";
+
+const initialState: ListState = {
+  edit: false,
+  data: {
+    _id: "",
+    name: "",
+    tasks: []
+  },
+  sort: "date",
+  filters: { duration: null, completed: null }
+};
+
+const listReducer = (state = initialState, action: ListActionTypes) => {
   switch (action.type) {
     case "SET_NEW_TASK_TO_LIST":
       return {
