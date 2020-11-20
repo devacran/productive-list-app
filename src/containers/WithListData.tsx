@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { setListData as _setListData } from "../actions";
 import { connect } from "react-redux";
-import { gql, useQuery, useMutation } from "@apollo/client";
-import { ListType, TaskType, ListFilterTypes, SortListTypes } from "../types";
+import { gql, useQuery } from "@apollo/client";
+import { ListType, TaskType } from "../types";
 
 const GET_LIST = gql`
   query getListData($listID: ID!) {
@@ -29,13 +29,14 @@ type WithListDataProps = {
   currentList: ListType;
   currentListTasks: TaskType[];
   setListData: (data: ListType) => void;
+  children: (props) => FC;
 };
-const WithListData = props => {
+const WithListData = (props: WithListDataProps) => {
   const { children, currentList, setListData, currentListTasks } = props;
   const { data = {}, loading, error } = useQuery(GET_LIST, {
     variables: { listID: currentList }
   });
-  useEffect(() => {
+  React.useEffect(() => {
     if (data.getList) {
       setListData(data.getList);
     }

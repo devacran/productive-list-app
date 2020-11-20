@@ -1,4 +1,4 @@
-export type TaskType = {
+export interface TaskType {
   _id?: string;
   __typename?: string;
   name?: string;
@@ -9,18 +9,18 @@ export type TaskType = {
   startDate?: string;
   endDate?: string;
   creationDate?: string;
-};
-export type ListType = {
+}
+export interface ListType {
   _id: string;
   name: string;
   tasks: TaskType[];
-};
+}
 
-export type ListFilterTypes = {
+export interface ListFilterTypes {
   // period: boolean & null;
   duration: string | null;
   completed: boolean | null;
-};
+}
 
 export type SortListTypes = "date" | "duration";
 
@@ -32,8 +32,8 @@ export enum TimerStatusTypes {
   IN_PROGRESS = "inProgress"
 }
 
-export type TimerType = {
+export interface TimerType {
   duration: number;
   remaindTime: number;
   timerStatus: TimerStatusTypes;
-};
+}
