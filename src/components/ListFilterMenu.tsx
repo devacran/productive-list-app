@@ -1,22 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
-const ListFilterMenu = props => {
-  const [filters, setFilters] = useState({ duration: null, completed: null });
+import { ListFilterTypes } from "../types";
+type ListFilterMenuProps = {
+  handleListFilters: (filters: object) => void;
+};
 
-  const handleChange = evn => {
+const ListFilterMenu: FC<ListFilterMenuProps> = (
+  props: ListFilterMenuProps
+) => {
+  const [filters, setFilters] = useState<ListFilterTypes>({
+    duration: null,
+    completed: null
+  });
+
+  const handleChange = (evn: React.ChangeEvent<HTMLSelectElement>) => {
     const selectorValue = evn.target.value;
-
     selectorValue !== "none"
       ? setFilters({ ...filters, duration: selectorValue })
       : setFilters({ ...filters, duration: null });
   };
-  const handleToggle = evn => {
+
+  const handleToggle = () => {
     setFilters({ ...filters, completed: filters.completed ? null : true });
   };
+
   useEffect(() => {
     props.handleListFilters(filters);
   }, [filters]);
+
   return (
     <div className="list-filter-menu">
       Filtrar por

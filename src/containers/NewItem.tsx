@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setCurrentTask as _setCurrentTask } from "../actions";
 import { setTaskTimer as _setTaskTimerData } from "../actions";
 import { setNewTaskToList as _setNewTaskToList } from "../actions";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import ItemOptions from "../components/ItemOptions";
 import ItemTimeSelector from "../components/ItemTimeSelector";
 import ItemDescription from "../components/ItemDescription";
 import { CreateTaskMutation } from "./CreateTaskMutation";
-const NewItem = props => {
+import { TimerType, TaskType, TimerStatusTypes } from "../types";
+
+type NewItemProps = {
+  setCurrentTask: (task: TaskType) => void;
+  setTaskTimerData: (timer: TimerType) => void;
+  setNewTaskToList: (task: TaskType) => void;
+  timer: TimerType;
+  currentList: TaskType[];
+};
+const NewItem: FC<NewItemProps> = (props: NewItemProps) => {
   const [newTask, setNewTask] = useState(false); //To expand o close the newTask form
   const {
     setCurrentTask,
     setTaskTimerData,
-    setTaskTimer,
     setNewTaskToList,
     timer,
     currentList
@@ -30,13 +37,13 @@ const NewItem = props => {
   const handleCancelNewTask = () => {
     setNewTask(false);
   };
-  const updateTimerData = taskData => {
+  const updateTimerData = (taskData: TaskType) => {
     if (timer.timerStatus !== "inProgress") {
       setCurrentTask(taskData); //Sets current Task and timer only if timer is not in progress
       setTaskTimerData({
         duration: taskData.duration,
         remaindTime: taskData.duration,
-        timerStatus: "idle"
+        timerStatus: TimerStatusTypes.IDLE
       });
     }
   };
@@ -44,16 +51,13 @@ const NewItem = props => {
   const handleTaskDuration = ({ duration }) => {
     setInputValues({ ...inputValues, duration });
   };
-  const handleSubmit = evn => {
-    evn.preventDefault();
-    handleSaveNewTask(inputValues);
-  };
-  const handleChange = evn => {
+
+  const handleChange = (evn: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = evn.target.name;
     const fieldValue = evn.target.value;
     setInputValues({ ...inputValues, [fieldName]: fieldValue });
   };
-  const handleClick = evn => {
+  const handleClick = (evn: React.MouseEvent<HTMLButtonElement>) => {
     switch (evn.currentTarget.value) {
       case "cancel":
         handleCancelNewTask();
@@ -66,7 +70,7 @@ const NewItem = props => {
   const handleCancel = () => {
     handleCancelNewTask();
   };
-  const handleDescription = description => {
+  const handleDescription = (description: string) => {
     setInputValues({ ...inputValues, description });
   };
   return (

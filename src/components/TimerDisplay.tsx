@@ -1,7 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-const TimerDisplay = props => {
-  const { total, hours, minutes, seconds, style } = props;
+import React, { FC } from "react";
+
+type TimerDisplayProps = {
+  total: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  style: "string";
+};
+
+const TimerDisplay: FC<TimerDisplayProps> = (props: TimerDisplayProps) => {
+  const { hours, minutes, seconds, style } = props;
+
   return (
     <div className={style}>
       <span>

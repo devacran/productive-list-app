@@ -1,11 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import { Button } from "@material-ui/core";
 
-const Header = props => {
-  const { handleOpenStatsModal, handleCloseStatsModal } = props;
+type HeaderProps = {
+  handleOpenStatsModal: (status: boolean) => void;
+};
+
+const Header: FC<HeaderProps> = ({ handleOpenStatsModal }: HeaderProps) => {
   const handleClick = () => {
     handleOpenStatsModal(true);
   };
+
   return (
     <div className="header">
       <div className="header__item-1">

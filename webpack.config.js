@@ -6,6 +6,9 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js"
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"]
+  },
   devServer: {
     inline: true,
     host: "0.0.0.0",
@@ -15,6 +18,12 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(tsx|ts)?$/,
+        use: {
+          loader: "awesome-typescript-loader"
+        }
+      },
       {
         test: /\.m?js$/,
         exclude: /node_modules/,

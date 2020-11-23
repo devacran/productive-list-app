@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 const CREATE_TASK = gql`
   mutation createTask($input: TaskCreate!, $listID: ID!) {

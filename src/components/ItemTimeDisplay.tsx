@@ -1,7 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import { parseTimer } from "../utils/timer";
-const ItemTimeDisplay = props => {
-  const { total, hours, minutes, seconds } = parseTimer(props.time);
+
+type ItemTimeDisplayProps = {
+  time: number;
+};
+
+const ItemTimeDisplay: FC<ItemTimeDisplayProps> = (
+  props: ItemTimeDisplayProps
+) => {
+  const { hours, minutes, seconds } = parseTimer(props.time);
+
   return (
     <div>
       <span>
