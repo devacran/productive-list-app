@@ -5,7 +5,7 @@ type TimerDisplayProps = {
   hours: number;
   minutes: number;
   seconds: number;
-  style: "string";
+  style: string;
 };
 
 const TimerDisplay: FC<TimerDisplayProps> = (props: TimerDisplayProps) => {

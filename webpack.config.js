@@ -1,13 +1,13 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-  entry: path.resolve(__dirname, "src/index.js"),
+  entry: path.resolve(__dirname, "src/index.tsx"),
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "main.js"
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js", ".scss"]
   },
   devServer: {
     inline: true,
@@ -37,6 +37,7 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
+
         use: ["style-loader", "css-loader", "sass-loader"]
       },
       {

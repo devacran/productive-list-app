@@ -1,4 +1,21 @@
-const listReducer = (state = [], action) => {
+import {
+  ListState,
+  ListActionTypes,
+  UpdateTaskDataFromListType
+} from "../types";
+
+const initialState: ListState = {
+  edit: false,
+  data: {
+    _id: "",
+    name: "",
+    tasks: []
+  },
+  sort: "date",
+  filters: { duration: null, completed: null }
+};
+
+const listReducer = (state = initialState, action: ListActionTypes) => {
   switch (action.type) {
     case "SET_NEW_TASK_TO_LIST":
       return {
@@ -34,7 +51,9 @@ const listReducer = (state = [], action) => {
         data: {
           ...state.data,
           tasks: state.data.tasks.map(task => {
-            if (task._id === action.payload._id) {
+            if (
+              task._id === (action as UpdateTaskDataFromListType).payload._id
+            ) {
               return Object.assign({}, task, action.payload);
             }
             return task;

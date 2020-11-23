@@ -1,18 +1,18 @@
 import React, { FC, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import { filterList } from "../utils/filterList";
-import { parseTimer } from "../utils/timer";
 import Chart from "chart.js";
 import { TaskType } from "../types";
 
 type StatisticsProps = {
   list: TaskType[];
 };
+
 const Statistics: FC<StatisticsProps> = props => {
   const { list } = props;
   //To generate labels for the chart
   const generateLabels = (period: string) => {
     const todayDate = new Date();
+
     const generateWeek = () => {
       let labels = [];
       for (let i = 0; i < 7; i++) {
@@ -32,6 +32,7 @@ const Statistics: FC<StatisticsProps> = props => {
       }
       return labels;
     };
+
     switch (period) {
       case "week":
         return generateWeek();
@@ -47,6 +48,7 @@ const Statistics: FC<StatisticsProps> = props => {
     group: string;
   }) => {
     const { period, list, labels } = options;
+
     const generateWeek = () => {
       let values = [];
       const v = list.map((task: {} & TaskType) => {
@@ -54,6 +56,7 @@ const Statistics: FC<StatisticsProps> = props => {
         const v = { time: task.completitionTime, date: task.endDate };
         return v;
       });
+
       v.forEach((task: { time: number; date: string }) => {
         //then group the elements by date
         const taskDate = new Date(task.date).toLocaleDateString("es-MX", {
@@ -79,6 +82,7 @@ const Statistics: FC<StatisticsProps> = props => {
       });
       return generatedValues;
     };
+
     switch (period) {
       case "week":
         return generateWeek();
@@ -156,10 +160,12 @@ const Statistics: FC<StatisticsProps> = props => {
       }
     }
   };
+
   useEffect(() => {
     const ctx = graph.current.getContext("2d");
     new Chart(ctx, config);
   }, []);
+
   return (
     <div>
       <h1>Resumen Semanal</h1>

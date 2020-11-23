@@ -1,4 +1,14 @@
-const currentTaskReducer = (state = {}, action) => {
+import { CurrentTaskState, CurrentTaskActionTypes } from "../types";
+
+const initialState: CurrentTaskState = {
+  edit: false,
+  data: {}
+};
+
+const currentTaskReducer = (
+  state = initialState,
+  action: CurrentTaskActionTypes
+) => {
   switch (action.type) {
     case "SET_CURRENT_TASK":
       return {
