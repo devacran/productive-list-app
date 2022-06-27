@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 const app = document.getElementById("app");
 import App from "./App";
 import { Provider } from "react-redux";
@@ -10,7 +11,7 @@ require("./styles/main.scss");
 
 const client = new ApolloClient({
   uri: "https://productive-list-server.vercel.app/api",
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 const composeEnhancers =
@@ -18,12 +19,12 @@ const composeEnhancers =
 
 import initialState from "./initialState";
 const store = createStore(reducer, initialState, composeEnhancers());
+const root = createRoot(app);
 
-ReactDOM.render(
+root.render(
   <Provider store={store}>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
-  </Provider>,
-  app
+  </Provider>
 );

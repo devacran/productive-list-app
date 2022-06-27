@@ -1,28 +1,29 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
+  mode: "development",
   entry: path.resolve(__dirname, "src/index.tsx"),
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js"
+    filename: "main.js",
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".scss"]
+    extensions: [".ts", ".tsx", ".js", ".scss"],
   },
   devServer: {
-    inline: true,
     host: "0.0.0.0",
     historyApiFallback: {
-      index: "index.html"
-    }
+      index: "index.html",
+    },
   },
   module: {
     rules: [
       {
         test: /\.(tsx|ts)?$/,
         use: {
-          loader: "awesome-typescript-loader"
-        }
+          loader: "ts-loader",
+        },
+        exclude: /node_modules/,
       },
       {
         test: /\.m?js$/,
@@ -30,26 +31,26 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
-          }
-        }
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
       {
         test: /\.scss$/,
         exclude: /node_modules/,
 
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.(svg|png|jpe?g|gif)$/i,
         exclude: /node_modules/,
-        use: ["file-loader"]
-      }
-    ]
+        use: ["file-loader"],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "src/index.html"
-    })
-  ]
+      template: "src/index.html",
+    }),
+  ],
 };

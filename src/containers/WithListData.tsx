@@ -41,7 +41,7 @@ const WithListData = (props: WithListDataProps) => {
   const { children, currentList, setListData, currentListTasks } = props;
 
   const { data, loading, error } = useQuery<GetList, GetListVars>(GET_LIST, {
-    variables: { listID: currentList }
+    variables: { listID: currentList },
   });
 
   React.useEffect(() => {
@@ -53,13 +53,15 @@ const WithListData = (props: WithListDataProps) => {
   return children({ data: currentListTasks, loading, error });
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentList: state.list.data._id,
-  currentListTasks: state.list.data.tasks
+  currentListTasks: state.list.data.tasks,
 });
 
 const mapDispatchToProps = {
-  setListData: _setListData
+  setListData: _setListData,
 };
+
+/* @ts-ignore-next-line  */
 
 export default connect(mapStateToProps, mapDispatchToProps)(WithListData);

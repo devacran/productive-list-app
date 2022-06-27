@@ -3,7 +3,7 @@ import Home from "./containers/Home";
 import Header from "./components/Header";
 import Statistics from "./containers/Statistics";
 import { Container } from "@material-ui/core";
-import { Modal as StatsModal } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
 
 const App: FC = () => {
   const [openStatsModal, setOpenStatsModal] = useState<boolean>(false);
@@ -20,7 +20,8 @@ const App: FC = () => {
     <div className="app-container">
       <Header handleOpenStatsModal={handleOpenStatsModal}></Header>
       <Home />
-      <StatsModal
+      {/* @ts-ignore-next-line  */}
+      <Modal
         className="stats-modal"
         open={openStatsModal}
         onClose={handleCloseStatsModal}
@@ -28,7 +29,7 @@ const App: FC = () => {
         <Container maxWidth="md" className="stats-modal__container">
           <Statistics />
         </Container>
-      </StatsModal>
+      </Modal>
     </div>
   );
 };

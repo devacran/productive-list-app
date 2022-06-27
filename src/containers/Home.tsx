@@ -10,6 +10,7 @@ const Home: FC = () => {
       <UpdateTaskMutation>
         {([updateTask]) => <Timer updateTask={updateTask} />}
       </UpdateTaskMutation>
+      {/* @ts-ignore-next-line  */}
       <WithListData>{({ data }) => <List list={data} />}</WithListData>
     </div>
   );
