@@ -8,6 +8,7 @@ type StatisticsProps = {
 };
 
 const Statistics: FC<StatisticsProps> = props => {
+  
   const { list } = props;
   //To generate labels for the chart
   const generateLabels = (period: string) => {
@@ -163,7 +164,7 @@ const Statistics: FC<StatisticsProps> = props => {
 
   useEffect(() => {
     const ctx = graph.current.getContext("2d");
-    new Chart(ctx, config);
+    
   }, []);
 
   return (
