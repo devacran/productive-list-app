@@ -18,7 +18,7 @@ const composeEnhancers =
   (window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] as typeof compose) || compose; //To debugg state with redux chrome extension
 
 import initialState from "./initialState";
-const store = createStore(reducer, initialState, composeEnhancers());
+const store = createStore(reducer, initialState as any, composeEnhancers());
 const root = createRoot(app);
 
 root.render(
